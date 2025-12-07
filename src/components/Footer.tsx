@@ -79,16 +79,6 @@ const Footer: React.FC = () => {
                 href="https://www.instagram.com/supershiftlabs/" 
                 label="Follow us on Instagram" 
               />
-              <SocialIcon 
-                icon="x" 
-                href="https://x.com/supershiftlabs" 
-                label="Follow us on X" 
-              />
-              <SocialIcon 
-                icon="linkedin" 
-                href="https://linkedin.com/company/supershiftlabs" 
-                label="Follow us on LinkedIn" 
-              />
             </div>
           </div>
           
@@ -130,8 +120,12 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
               <li>admin@supershiftlabs.com</li>
-              <li>+1 319 470 8878</li>
-              <li>Centurion, South Africa</li>
+              <li>
+                <a href="tel:+13194708878" className="hover:text-white transition-colors">
+                  +1 319 470 8878
+                </a>
+              </li>
+              <li>Davenport, IA, USA</li>
               <li className="pt-2">
                 <a
                   href="https://wa.me/13194708878"

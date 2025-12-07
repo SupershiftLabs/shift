@@ -101,20 +101,19 @@ const organizationSchema = {
   telephone: '+13194708878',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Centurion',
-    addressRegion: 'Gauteng',
-    addressCountry: 'ZA',
+    addressLocality: 'Davenport',
+    addressRegion: 'IA',
+    postalCode: '52801',
+    addressCountry: 'US',
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: '-25.8601',
-    longitude: '28.1886',
+    latitude: '41.5236',
+    longitude: '-90.5776',
   },
   sameAs: [
     'https://www.facebook.com/profile.php?id=61584803090279',
     'https://www.instagram.com/supershiftlabs/',
-    'https://x.com/supershiftlabs',
-    'https://linkedin.com/company/supershiftlabs',
   ],
   contactPoint: [
     {
@@ -188,14 +187,15 @@ const localBusinessSchema = {
   email: 'admin@supershiftlabs.com',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Centurion',
-    addressRegion: 'Gauteng',
-    addressCountry: 'ZA',
+    addressLocality: 'Davenport',
+    addressRegion: 'IA',
+    postalCode: '52801',
+    addressCountry: 'US',
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: '-25.8601',
-    longitude: '28.1886',
+    latitude: '41.5236',
+    longitude: '-90.5776',
   },
   url: siteUrl,
   openingHoursSpecification: [
