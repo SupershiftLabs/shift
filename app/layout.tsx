@@ -11,11 +11,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shift-f5a5ynmd1-adh
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'SuperShift Labs - Digital Innovation Agency',
-    template: '%s | SuperShift Labs'
+    default: 'SuperShift Labs - Web Development & Mobile Apps | Davenport, Iowa',
+    template: '%s | SuperShift Labs - Davenport, IA'
   },
-  description: 'Expert web development, mobile apps, and cloud solutions. Transform your digital presence with custom software that drives growth.',
-  keywords: ['web development', 'mobile apps', 'cloud solutions', 'digital agency', 'software development', 'UI/UX design', 'custom software', 'Davenport', 'Iowa', 'responsive design', 'PWA', 'API development', 'database design'],
+  description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation services for Iowa businesses. Fast delivery, modern tech stack.',
+  keywords: ['web development Davenport Iowa', 'mobile apps Iowa', 'software development Davenport', 'web design Iowa', 'React developers Davenport', 'Next.js development Iowa', 'custom software Quad Cities', 'Iowa web agency', 'Davenport tech company', 'cloud solutions Iowa', 'UI/UX design Davenport', 'responsive websites Iowa', 'e-commerce development Davenport', 'SaaS development Iowa'],
   authors: [{ name: 'SuperShift Labs' }],
   creator: 'SuperShift Labs',
   publisher: 'SuperShift Labs',
@@ -49,21 +49,21 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'SuperShift Labs',
-    title: 'SuperShift Labs - Digital Innovation Agency',
-    description: 'Transform your digital presence with cutting-edge web development, mobile apps, and cloud solutions. Expert software development services in South Africa.',
+    title: 'SuperShift Labs - Web Development & Mobile Apps | Davenport, Iowa',
+    description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses. Modern tech, fast delivery.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'SuperShift Labs - Digital Innovation Agency',
+        alt: 'SuperShift Labs - Web Development Agency in Davenport, Iowa',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SuperShift Labs - Digital Innovation Agency',
-    description: 'Transform your digital presence with cutting-edge web development, mobile apps, and cloud solutions.',
+    title: 'SuperShift Labs - Web Development & Mobile Apps | Davenport, Iowa',
+    description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software and digital solutions for Iowa businesses.',
     images: ['/og-image.png'],
     creator: '@supershiftlabs',
     site: '@supershiftlabs',
@@ -86,7 +86,7 @@ const organizationSchema = {
   '@id': `${siteUrl}/#organization`,
   name: 'SuperShift Labs',
   legalName: 'SuperShift Labs',
-  description: 'Digital Innovation Agency specializing in web development, mobile apps, and cloud solutions',
+  description: 'Leading web development and mobile app agency in Davenport, Iowa. Specializing in custom software, cloud solutions, and digital transformation for Iowa businesses.',
   url: siteUrl,
   logo: {
     '@type': 'ImageObject',
@@ -124,16 +124,16 @@ const organizationSchema = {
       telephone: '+13195370228',
       contactType: 'customer service',
       email: 'admin@supershiftlabs.com',
-      availableLanguage: ['English', 'Afrikaans'],
-      areaServed: 'ZA',
+      availableLanguage: ['English'],
+      areaServed: 'US',
     },
     {
       '@type': 'ContactPoint',
       telephone: '+13195370228',
       contactType: 'sales',
       email: 'admin@supershiftlabs.com',
-      availableLanguage: ['English', 'Afrikaans'],
-      areaServed: ['ZA', 'US', 'GB'],
+      availableLanguage: ['English'],
+      areaServed: ['US', 'IA'],
     },
   ],
   aggregateRating: {
@@ -209,10 +209,20 @@ const localBusinessSchema = {
       closes: '17:00',
     },
   ],
-  areaServed: {
-    '@type': 'Country',
-    name: 'South Africa',
-  },
+  areaServed: [
+    {
+      '@type': 'State',
+      name: 'Iowa',
+    },
+    {
+      '@type': 'City',
+      name: 'Davenport',
+    },
+    {
+      '@type': 'Place',
+      name: 'Quad Cities',
+    },
+  ],
 }
 
 // JSON-LD Structured Data - Service Offerings
@@ -223,42 +233,42 @@ const serviceSchema = {
     {
       '@type': 'Service',
       name: 'Web Development',
-      description: 'Custom web applications and responsive websites built with modern technologies',
+      description: 'Custom web applications and responsive websites built with modern technologies for Iowa businesses',
       provider: {
         '@id': `${siteUrl}/#organization`,
       },
       serviceType: 'Web Development',
-      areaServed: 'Worldwide',
+      areaServed: ['Iowa', 'Midwest', 'United States'],
     },
     {
       '@type': 'Service',
       name: 'Mobile App Development',
-      description: 'Native and cross-platform mobile applications for iOS and Android',
+      description: 'Native and cross-platform mobile applications for iOS and Android serving Iowa and US clients',
       provider: {
         '@id': `${siteUrl}/#organization`,
       },
       serviceType: 'Mobile App Development',
-      areaServed: 'Worldwide',
+      areaServed: ['Iowa', 'Midwest', 'United States'],
     },
     {
       '@type': 'Service',
       name: 'Cloud Solutions',
-      description: 'Scalable cloud infrastructure and deployment solutions',
+      description: 'Scalable cloud infrastructure and deployment solutions for Iowa businesses',
       provider: {
         '@id': `${siteUrl}/#organization`,
       },
       serviceType: 'Cloud Computing',
-      areaServed: 'Worldwide',
+      areaServed: ['Iowa', 'Midwest', 'United States'],
     },
     {
       '@type': 'Service',
       name: 'UI/UX Design',
-      description: 'User-centered interface and experience design',
+      description: 'User-centered interface and experience design for Iowa and US companies',
       provider: {
         '@id': `${siteUrl}/#organization`,
       },
       serviceType: 'Design',
-      areaServed: 'Worldwide',
+      areaServed: ['Iowa', 'Midwest', 'United States'],
     },
   ],
 }
