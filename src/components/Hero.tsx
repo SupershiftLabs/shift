@@ -54,18 +54,12 @@ const Hero: React.FC = () => {
           {content.description}
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex justify-center">
           <button 
             onClick={() => scrollToSection('services')}
             className="px-8 py-4 bg-green-500 hover:bg-green-600 text-black font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25"
           >
             {content.cta_text}
-          </button>
-          <button 
-            onClick={() => scrollToSection('projects')}
-            className="px-8 py-4 border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-black font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
-          >
-            See Projects
           </button>
         </div>
       </article>
