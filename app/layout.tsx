@@ -111,7 +111,7 @@ const organizationSchema = {
     longitude: '28.1886',
   },
   sameAs: [
-    'https://facebook.com/supershiftlabs',
+    'https://www.facebook.com/profile.php?id=61584803090279',
     'https://instagram.com/supershiftlabs',
     'https://x.com/supershiftlabs',
     'https://linkedin.com/company/supershiftlabs',

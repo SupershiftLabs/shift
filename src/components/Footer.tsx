@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
             <div className="flex gap-4 mt-4">
               <SocialIcon 
                 icon="facebook" 
-                href="https://facebook.com/supershiftlabs" 
+                href="https://www.facebook.com/profile.php?id=61584803090279" 
                 label="Follow us on Facebook" 
               />
               <SocialIcon 

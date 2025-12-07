@@ -43,7 +43,7 @@ const Contact: React.FC = () => {
     whatsapp: '+13194708878',
     location: 'Centurion, South Africa',
     socialLinks: [
-      { name: 'Facebook', url: 'https://facebook.com/supershiftlabs', icon: 'facebook' },
+      { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61584803090279', icon: 'facebook' },
       { name: 'Instagram', url: 'https://instagram.com/supershiftlabs', icon: 'instagram' },
       { name: 'X', url: 'https://x.com/supershiftlabs', icon: 'x' },
       { name: 'LinkedIn', url: 'https://linkedin.com/company/supershiftlabs', icon: 'linkedin' }
@@ -317,7 +317,7 @@ const Contact: React.FC = () => {
                     <SocialIcon icon={social.icon} name={social.name} />
                   </a>
                 )) || [
-                  { name: 'Facebook', icon: 'facebook', url: 'https://facebook.com/supershiftlabs' },
+                  { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/profile.php?id=61584803090279' },
                   { name: 'Instagram', icon: 'instagram', url: 'https://instagram.com/supershiftlabs' },
                   { name: 'X', icon: 'x', url: 'https://x.com/supershiftlabs' },
                   { name: 'LinkedIn', icon: 'linkedin', url: 'https://linkedin.com/company/supershiftlabs' }
