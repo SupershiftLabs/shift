@@ -41,7 +41,7 @@ const Contact: React.FC = () => {
     email: 'admin@supershiftlabs.com',
     phone: '+13194708878',
     whatsapp: '+13194708878',
-    location: 'Centurion, South Africa',
+    location: 'Davenport, IA, USA',
     socialLinks: [
       { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61584803090279', icon: 'facebook' },
       { name: 'Instagram', url: 'https://www.instagram.com/supershiftlabs/', icon: 'instagram' },

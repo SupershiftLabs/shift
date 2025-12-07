@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     default: 'SuperShift Labs - Digital Innovation Agency',
     template: '%s | SuperShift Labs'
   },
-  description: 'Expert web development, mobile apps, and cloud solutions in South Africa. Transform your digital presence with custom software that drives growth.',
-  keywords: ['web development', 'mobile apps', 'cloud solutions', 'digital agency', 'software development', 'UI/UX design', 'custom software', 'South Africa', 'Centurion', 'responsive design', 'PWA', 'API development', 'database design'],
+  description: 'Expert web development, mobile apps, and cloud solutions. Transform your digital presence with custom software that drives growth.',
+  keywords: ['web development', 'mobile apps', 'cloud solutions', 'digital agency', 'software development', 'UI/UX design', 'custom software', 'Davenport', 'Iowa', 'responsive design', 'PWA', 'API development', 'database design'],
   authors: [{ name: 'SuperShift Labs' }],
   creator: 'SuperShift Labs',
   publisher: 'SuperShift Labs',
