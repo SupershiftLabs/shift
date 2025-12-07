@@ -52,11 +52,11 @@ const SEOChecker: React.FC = () => {
       // Transform API response to match our result format
       setResult({
         score: data.score,
-        title: data.title,
-        description: data.description,
-        headings: data.headings,
-        images: data.images,
-        links: data.links,
+        title: data.analysis.title || 'No title found',
+        description: data.analysis.description || 'No description found',
+        headings: data.analysis.totalHeadings || 0,
+        images: data.analysis.totalImages || 0,
+        links: data.analysis.totalLinks || 0,
         recommendations: data.recommendations || []
       });
     } catch (err: any) {
