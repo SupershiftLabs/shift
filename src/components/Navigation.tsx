@@ -22,6 +22,7 @@ const Navigation: React.FC = () => {
   const navItems = [
     { name: 'Services', id: 'services' },
     { name: 'Projects', id: 'projects' },
+    { name: 'Pricing', id: 'pricing' },
     { name: 'SEO Check', id: 'seo-checker' },
     { name: 'About', id: 'about' },
     { name: 'Contact', id: 'contact' }
@@ -57,7 +58,7 @@ const Navigation: React.FC = () => {
               </button>
             ))}
             <button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection('pricing')}
               className="px-6 py-2 bg-green-500 hover:bg-green-600 text-black font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
             >
               Get Started

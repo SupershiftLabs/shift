@@ -208,7 +208,7 @@ const Services: React.FC = () => {
                 <button 
                   onClick={() => {
                     setSelectedService(null);
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   className="w-full px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
                 >
