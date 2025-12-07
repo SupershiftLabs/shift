@@ -119,7 +119,7 @@ export default function PrivacyPolicy() {
             </ul>
 
             <p className="leading-relaxed mt-4">
-              To exercise these rights, please contact us at <a href="mailto:admin@supershiftlabs.com" className="text-green-400 hover:underline">admin@supershiftlabs.com</a> or call <a href="tel:+13194708878" className="text-green-400 hover:underline">+1 319 470 8878</a>.
+              To exercise these rights, please contact us at <a href="mailto:admin@supershiftlabs.com" className="text-green-400 hover:underline">admin@supershiftlabs.com</a> or call <a href="tel:+13195370228" className="text-green-400 hover:underline">+1 319 537 0228</a>.
             </p>
           </section>
 
@@ -180,8 +180,8 @@ export default function PrivacyPolicy() {
             <div className="bg-gray-900/50 p-6 rounded-lg space-y-2">
               <p><strong>SuperShift Labs</strong></p>
               <p>Email: <a href="mailto:admin@supershiftlabs.com" className="text-green-400 hover:underline">admin@supershiftlabs.com</a></p>
-              <p>Phone: <a href="tel:+13194708878" className="text-green-400 hover:underline">+1 319 470 8878</a></p>
-              <p>SMS: <a href="sms:+13194708878" className="text-green-400 hover:underline">+1 319 470 8878</a></p>
+              <p>Phone: <a href="tel:+13195370228" className="text-green-400 hover:underline">+1 319 537 0228</a></p>
+              <p>SMS: <a href="sms:+13195370228" className="text-green-400 hover:underline">+1 319 537 0228</a></p>
             </div>
           </section>
         </div>

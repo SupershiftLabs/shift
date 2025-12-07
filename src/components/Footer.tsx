@@ -121,14 +121,14 @@ const Footer: React.FC = () => {
             <ul className="space-y-2 text-gray-400">
               <li>admin@supershiftlabs.com</li>
               <li>
-                <a href="tel:+13194708878" className="hover:text-white transition-colors">
-                  +1 319 470 8878
+                <a href="tel:+13195370228" className="hover:text-white transition-colors">
+                  +1 319 537 0228
                 </a>
               </li>
               <li>Davenport, IA, USA</li>
               <li className="pt-2">
                 <a
-                  href="https://wa.me/13194708878"
+                  href="https://wa.me/13195370228"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors font-medium"

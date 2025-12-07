@@ -101,7 +101,7 @@ const organizationSchema = {
     height: '630',
   },
   email: 'admin@supershiftlabs.com',
-  telephone: '+13194708878',
+  telephone: '+13195370228',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Davenport',
@@ -121,7 +121,7 @@ const organizationSchema = {
   contactPoint: [
     {
       '@type': 'ContactPoint',
-      telephone: '+13194708878',
+      telephone: '+13195370228',
       contactType: 'customer service',
       email: 'admin@supershiftlabs.com',
       availableLanguage: ['English', 'Afrikaans'],
@@ -129,7 +129,7 @@ const organizationSchema = {
     },
     {
       '@type': 'ContactPoint',
-      telephone: '+13194708878',
+      telephone: '+13195370228',
       contactType: 'sales',
       email: 'admin@supershiftlabs.com',
       availableLanguage: ['English', 'Afrikaans'],
@@ -186,7 +186,7 @@ const localBusinessSchema = {
   name: 'SuperShift Labs',
   image: `${siteUrl}/og-image.png`,
   priceRange: '$$',
-  telephone: '+13194708878',
+  telephone: '+13195370228',
   email: 'admin@supershiftlabs.com',
   address: {
     '@type': 'PostalAddress',

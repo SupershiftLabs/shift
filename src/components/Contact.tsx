@@ -39,8 +39,8 @@ const Contact: React.FC = () => {
     title: "Let's Build Something Amazing",
     description: "Ready to transform your digital presence? Get in touch and let's discuss your project.",
     email: 'admin@supershiftlabs.com',
-    phone: '+13194708878',
-    whatsapp: '+13194708878',
+    phone: '+13195370228',
+    whatsapp: '+13195370228',
     location: 'Davenport, IA, USA',
     socialLinks: [
       { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61584803090279', icon: 'facebook' },
@@ -289,7 +289,7 @@ const Contact: React.FC = () => {
 
             {/* WhatsApp Button */}
             <a
-              href={`https://wa.me/${(content.whatsapp || content.phone || '+13194708878').replace(/[^0-9]/g, '')}`}
+              href={`https://wa.me/${(content.whatsapp || content.phone || '+13195370228').replace(/[^0-9]/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full px-6 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-600/25 text-center"
