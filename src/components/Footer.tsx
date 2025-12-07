@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
               />
               <SocialIcon 
                 icon="instagram" 
-                href="https://instagram.com/supershiftlabs" 
+                href="https://www.instagram.com/supershiftlabs/" 
                 label="Follow us on Instagram" 
               />
               <SocialIcon 

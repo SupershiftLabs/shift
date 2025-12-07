@@ -44,7 +44,7 @@ const Contact: React.FC = () => {
     location: 'Centurion, South Africa',
     socialLinks: [
       { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61584803090279', icon: 'facebook' },
-      { name: 'Instagram', url: 'https://instagram.com/supershiftlabs', icon: 'instagram' },
+      { name: 'Instagram', url: 'https://www.instagram.com/supershiftlabs/', icon: 'instagram' },
       { name: 'X', url: 'https://x.com/supershiftlabs', icon: 'x' },
       { name: 'LinkedIn', url: 'https://linkedin.com/company/supershiftlabs', icon: 'linkedin' }
     ]
@@ -318,7 +318,7 @@ const Contact: React.FC = () => {
                   </a>
                 )) || [
                   { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/profile.php?id=61584803090279' },
-                  { name: 'Instagram', icon: 'instagram', url: 'https://instagram.com/supershiftlabs' },
+                  { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/supershiftlabs/' },
                   { name: 'X', icon: 'x', url: 'https://x.com/supershiftlabs' },
                   { name: 'LinkedIn', icon: 'linkedin', url: 'https://linkedin.com/company/supershiftlabs' }
                 ].map((social, index) => (
