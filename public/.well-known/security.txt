@@ -1,0 +1,26 @@
+Contact: mailto:admin@supershiftlabs.com
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://supershiftlabs.com/.well-known/security.txt
+Policy: https://supershiftlabs.com/privacy-policy
+Hiring: https://supershiftlabs.com/#contact
+
+# Security Vulnerability Reporting
+
+If you discover a security vulnerability within SuperShift Labs' website or services, 
+please send an email to admin@supershiftlabs.com with details. We take all security 
+reports seriously and will respond promptly.
+
+Please include:
+- Type of vulnerability
+- Affected URL or endpoint
+- Steps to reproduce
+- Potential impact
+- Your contact information (optional)
+
+We appreciate responsible disclosure and will acknowledge your contribution.
+
+# PGP Key
+# For sensitive disclosures, you may request our PGP key by emailing admin@supershiftlabs.com
+
+# Thank you for helping keep SuperShift Labs and our users safe!
