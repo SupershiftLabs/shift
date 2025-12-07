@@ -131,11 +131,11 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
               <li>admin@supershiftlabs.com</li>
-              <li>+27 67 377 9676</li>
+              <li>+1 319 470 8878</li>
               <li>Centurion, South Africa</li>
               <li className="pt-2">
                 <a
-                  href="https://wa.me/27673779676"
+                  href="https://wa.me/13194708878"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors font-medium"

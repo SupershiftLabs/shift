@@ -98,7 +98,7 @@ const organizationSchema = {
     height: '630',
   },
   email: 'admin@supershiftlabs.com',
-  telephone: '+27673779676',
+  telephone: '+13194708878',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Centurion',
@@ -119,7 +119,7 @@ const organizationSchema = {
   contactPoint: [
     {
       '@type': 'ContactPoint',
-      telephone: '+27673779676',
+      telephone: '+13194708878',
       contactType: 'customer service',
       email: 'admin@supershiftlabs.com',
       availableLanguage: ['English', 'Afrikaans'],
@@ -127,7 +127,7 @@ const organizationSchema = {
     },
     {
       '@type': 'ContactPoint',
-      telephone: '+27673779676',
+      telephone: '+13194708878',
       contactType: 'sales',
       email: 'admin@supershiftlabs.com',
       availableLanguage: ['English', 'Afrikaans'],
@@ -184,7 +184,7 @@ const localBusinessSchema = {
   name: 'SuperShift Labs',
   image: `${siteUrl}/og-image.png`,
   priceRange: '$$',
-  telephone: '+27673779676',
+  telephone: '+13194708878',
   email: 'admin@supershiftlabs.com',
   address: {
     '@type': 'PostalAddress',
