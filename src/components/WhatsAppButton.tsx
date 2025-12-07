@@ -4,7 +4,7 @@ import React from 'react';
 const WhatsAppButton = () => {
   return (
     <a
-      href="sms:+13194708878"
+      href="sms:+13195370228"
       className="fixed bottom-4 right-4 w-14 h-14 bg-blue-500 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg shadow-blue-500/50 z-50 group"
       aria-label="Send Message"
     >
