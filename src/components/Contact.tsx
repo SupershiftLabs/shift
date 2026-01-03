@@ -261,7 +261,7 @@ const Contact: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-8 py-4 bg-green-500 hover:bg-green-600 disabled:bg-green-300 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 disabled:scale-100 shadow-lg shadow-green-500/25"
+                className="w-full px-8 py-4 bg-green-700 hover:bg-green-800 disabled:bg-gray-500 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 disabled:scale-100 shadow-lg shadow-green-500/25"
                 aria-label="Send message to SuperShift Labs"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
@@ -322,7 +322,7 @@ const Contact: React.FC = () => {
               href={`https://wa.me/${(content.whatsapp || content.phone || '+13195370228').replace(/[^0-9]/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full px-6 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-600/25 text-center"
+              className="block w-full px-6 py-4 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-700/25 text-center"
               aria-label="Chat with SuperShift Labs on WhatsApp"
             >
               <div className="flex items-center justify-center gap-3">
@@ -342,7 +342,7 @@ const Contact: React.FC = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gray-700 hover:bg-green-600 rounded-lg flex items-center justify-center transition-all duration-300 text-gray-300 hover:text-white group"
+                    className="w-12 h-12 bg-gray-700 hover:bg-green-700 rounded-lg flex items-center justify-center transition-all duration-300 text-gray-300 hover:text-white group"
                     aria-label={`Follow us on ${social.name}`}
                   >
                     <SocialIcon icon={social.icon} name={social.name} />
@@ -356,7 +356,7 @@ const Contact: React.FC = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gray-700 hover:bg-green-600 rounded-lg flex items-center justify-center transition-all duration-300 text-gray-300 hover:text-white"
+                    className="w-12 h-12 bg-gray-700 hover:bg-green-700 rounded-lg flex items-center justify-center transition-all duration-300 text-gray-300 hover:text-white"
                     aria-label={`Follow us on ${social.name}`}
                   >
                     <SocialIcon icon={social.icon} name={social.name} />

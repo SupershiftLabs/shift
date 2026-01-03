@@ -43,7 +43,7 @@ const SocialIcon: React.FC<{ icon: string; href: string; label: string }> = ({ i
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-10 h-10 bg-gray-800 hover:bg-green-500 rounded-lg flex items-center justify-center transition-colors group"
+      className="w-10 h-10 bg-gray-800 hover:bg-green-700 rounded-lg flex items-center justify-center transition-colors group"
       aria-label={label}
     >
       {getIcon()}

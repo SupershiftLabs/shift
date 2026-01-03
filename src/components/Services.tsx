@@ -233,7 +233,7 @@ const Services: React.FC = () => {
                     setSelectedService(null);
                     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="w-full px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                  className="w-full px-6 py-3 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
                   aria-label={`Get started with ${selectedService.title} services for your business in Davenport, Iowa and the Quad Cities`}
                 >
                   Get Started with {selectedService.title} →

@@ -49,8 +49,8 @@ const Projects: React.FC = () => {
                 aria-label={`Show ${category === 'all' ? 'all' : category} projects`}
                 className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
                   filter === category
-                    ? 'bg-green-600 text-white shadow-lg shadow-green-500/25'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    ? 'bg-green-700 text-white shadow-lg shadow-green-500/25'
+                    : 'bg-gray-700 text-gray-200 hover:bg-gray-600 hover:text-white'
                 }`}
               >
                 {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -83,7 +83,7 @@ const Projects: React.FC = () => {
                         href={project.demo_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                        className="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors"
                         aria-label={`View live demo of ${project.title}`}
                       >
                         Demo
