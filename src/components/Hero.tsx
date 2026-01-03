@@ -40,18 +40,12 @@ const Hero: React.FC = () => {
     // Try to play with audio, fall back to muted if blocked
     const tryPlayWithAudio = async () => {
       try {
+        // Video is already playing muted due to autoPlay
+        // Try to unmute it
         video.muted = false;
-        await video.play();
-        console.log('🔊 Video playing with audio');
+        console.log('🔊 Audio enabled');
       } catch (error) {
-        console.log('🔇 Autoplay with audio blocked, playing muted');
-        video.muted = true;
-        try {
-          await video.play();
-        } catch (mutedError) {
-          console.log('❌ Video playback failed entirely');
-          setShowText(true);
-        }
+        console.log('🔇 Could not enable audio, keeping muted');
       }
     };
 
@@ -73,13 +67,13 @@ const Hero: React.FC = () => {
     // Log when video starts playing
     const handleVideoPlay = () => {
       console.log('▶️ Video started playing');
+      // Try to unmute after video starts
+      tryPlayWithAudio();
     };
 
     // Log video duration when metadata loads
     const handleLoadedMetadata = () => {
       console.log(`📹 Video duration: ${video.duration.toFixed(1)} seconds`);
-      // Try to play with audio after metadata loads
-      tryPlayWithAudio();
     };
 
     video.addEventListener('ended', handleVideoEnd);
@@ -123,6 +117,8 @@ const Hero: React.FC = () => {
       {/* Background Video */}
       <video 
         ref={videoRef}
+        autoPlay
+        muted
         playsInline
         preload="auto"
         className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-30' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
