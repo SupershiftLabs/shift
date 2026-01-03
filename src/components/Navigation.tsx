@@ -43,11 +43,11 @@ const Navigation: React.FC = () => {
               alt="SuperShift Labs Logo" 
               className="h-10 w-10 object-contain"
             />
-            <h1 className={`text-xl font-bold transition-colors ${
+            <div className={`text-xl font-bold transition-colors ${
               isScrolled ? 'text-white' : 'text-white'
             }`}>
               Super<span className="text-green-400">Shift</span> Labs
-            </h1>
+            </div>
           </div>
           
           <div className="hidden md:flex items-center gap-8">

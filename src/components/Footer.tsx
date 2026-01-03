@@ -119,7 +119,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>admin@supershiftlabs.com</li>
+              <li>
+                <a href="mailto:admin@supershiftlabs.com" className="hover:text-white transition-colors">
+                  admin@supershiftlabs.com
+                </a>
+              </li>
               <li>
                 <a href="tel:+13195370228" className="hover:text-white transition-colors">
                   +1 319 537 0228

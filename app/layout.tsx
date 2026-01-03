@@ -12,10 +12,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shift-f5a5ynmd1-adh
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'SuperShift Labs - Web Development & Mobile Apps | Davenport, Iowa',
+    default: 'SuperShift Labs - Web & Mobile Apps Davenport Iowa',
     template: '%s | SuperShift Labs - Davenport, IA'
   },
-  description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation services for Iowa businesses. Fast delivery, modern tech stack.',
+  description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses.',
   keywords: ['web development Davenport Iowa', 'mobile apps Iowa', 'software development Davenport', 'web design Iowa', 'React developers Davenport', 'Next.js development Iowa', 'custom software Quad Cities', 'Iowa web agency', 'Davenport tech company', 'cloud solutions Iowa', 'UI/UX design Davenport', 'responsive websites Iowa', 'e-commerce development Davenport', 'SaaS development Iowa'],
   authors: [{ name: 'SuperShift Labs' }],
   creator: 'SuperShift Labs',
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'SuperShift Labs',
-    title: 'SuperShift Labs - Web Development & Mobile Apps | Davenport, Iowa',
-    description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses. Modern tech, fast delivery.',
+    title: 'SuperShift Labs - Web & Mobile Apps Davenport Iowa',
+    description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses.',
     images: [
       {
         url: '/og-image.png',
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SuperShift Labs - Web Development & Mobile Apps | Davenport, Iowa',
+    title: 'SuperShift Labs - Web & Mobile Apps Davenport Iowa',
     description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software and digital solutions for Iowa businesses.',
     images: ['/og-image.png'],
     creator: '@supershiftlabs',

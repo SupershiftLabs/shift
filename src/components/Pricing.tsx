@@ -134,37 +134,45 @@ const Pricing: React.FC = () => {
   };
 
   return (
-    <section id="pricing" className="py-20 px-6 bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
+    <section 
+      id="pricing" 
+      className="py-20 px-6 bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden"
+      aria-labelledby="pricing-heading"
+      itemScope 
+      itemType="https://schema.org/OfferCatalog"
+    >
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10" aria-hidden="true">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500 rounded-full filter blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <header className="text-center mb-12">
+          <h2 id="pricing-heading" className="text-4xl md:text-5xl font-bold text-white mb-4" itemProp="name">
             SuperShift Labs – <span className="text-green-400">2026 Pricing</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-3">
-            Lightning-fast websites & apps built in days, not months.
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-3" itemProp="description">
+            Lightning-fast websites & apps built in days, not months for Iowa businesses.
           </p>
           <p className="text-lg text-green-400 font-medium">
-            Davenport-based • React / Next.js • No WordPress bloat
+            Davenport, Iowa based • Serving Quad Cities & Midwest • React / Next.js • No WordPress bloat
           </p>
-        </div>
+        </header>
 
         {/* Core Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {pricingPlans.map((plan, index) => (
-            <div
+        <div className="grid md:grid-cols-3 gap-8 mb-16" role="list" aria-label="Website development packages">{pricingPlans.map((plan, index) => (
+            <article
               key={index}
               className={`relative rounded-2xl p-8 transition-all duration-300 hover:scale-105 ${
                 plan.highlight
                   ? 'bg-gradient-to-br from-green-500/20 to-blue-500/20 border-2 border-green-400 shadow-2xl shadow-green-500/20'
                   : 'bg-gray-800/50 border border-gray-700 hover:border-green-400/50'
               }`}
+              itemScope 
+              itemType="https://schema.org/Offer"
+              role="listitem"
             >
               {/* Popular Badge */}
               {plan.highlight && (
@@ -176,33 +184,34 @@ const Pricing: React.FC = () => {
               )}
 
               {/* Plan Icon */}
-              <div className="text-5xl mb-4">{plan.icon}</div>
+              <div className="text-5xl mb-4" aria-hidden="true">{plan.icon}</div>
 
               {/* Plan Name */}
-              <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+              <h3 className="text-2xl font-bold text-white mb-2" itemProp="name">{plan.name}</h3>
 
               {/* Price */}
               <div className="mb-2">
-                <span className="text-3xl font-bold text-green-400">{plan.price}</span>
+                <span className="text-3xl font-bold text-green-400" itemProp="price">{plan.price}</span>
               </div>
 
               {/* Delivery Time */}
               <div className="mb-4">
-                <span className="text-sm text-gray-400">⚡ {plan.delivery}</span>
+                <span className="text-sm text-gray-400">⚡ <span itemProp="deliveryLeadTime">{plan.delivery}</span></span>
               </div>
 
               {/* Description */}
-              <p className="text-gray-400 mb-6 leading-relaxed whitespace-pre-line text-sm">{plan.description}</p>
+              <p className="text-gray-400 mb-6 leading-relaxed whitespace-pre-line text-sm" itemProp="description">{plan.description}</p>
 
               {/* Features List */}
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 mb-8" role="list">
                 {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-gray-300">
+                  <li key={idx} className="flex items-start gap-3 text-gray-300" role="listitem">
                     <svg
                       className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -224,52 +233,61 @@ const Pricing: React.FC = () => {
                     ? 'bg-green-500 hover:bg-green-600 text-black'
                     : 'bg-gray-700 hover:bg-green-500 text-white hover:text-black'
                 }`}
+                aria-label={`Get started with ${plan.name} package for your Iowa business`}
               >
                 {plan.cta}
               </button>
-            </div>
+              
+              <meta itemProp="seller" content="SuperShift Labs" />
+              <meta itemProp="availability" content="https://schema.org/InStock" />
+              <meta itemProp="areaServed" content="Davenport, Iowa, Quad Cities, Midwest" />
+            </article>
           ))}
         </div>
 
         {/* Advanced Solutions */}
         <div className="mb-16">
           <h3 className="text-3xl font-bold text-white text-center mb-8">
-            Advanced <span className="text-green-400">Solutions</span>
+            Advanced <span className="text-green-400">Solutions</span> for Iowa Businesses
           </h3>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8" role="list" aria-label="Advanced development solutions">
             {advancedPlans.map((plan, index) => (
-              <div
+              <article
                 key={index}
                 className="relative rounded-2xl p-8 bg-gray-800/50 border border-gray-700 hover:border-green-400/50 transition-all duration-300 hover:scale-105"
+                itemScope 
+                itemType="https://schema.org/Offer"
+                role="listitem"
               >
                 {/* Plan Icon */}
-                <div className="text-5xl mb-4">{plan.icon}</div>
+                <div className="text-5xl mb-4" aria-hidden="true">{plan.icon}</div>
 
                 {/* Plan Name */}
-                <h4 className="text-2xl font-bold text-white mb-2">{plan.name}</h4>
+                <h4 className="text-2xl font-bold text-white mb-2" itemProp="name">{plan.name}</h4>
 
                 {/* Price */}
                 <div className="mb-2">
-                  <span className="text-3xl font-bold text-green-400">{plan.price}</span>
+                  <span className="text-3xl font-bold text-green-400" itemProp="price">{plan.price}</span>
                 </div>
 
                 {/* Delivery Time */}
                 <div className="mb-4">
-                  <span className="text-sm text-gray-400">⚡ {plan.delivery}</span>
+                  <span className="text-sm text-gray-400">⚡ <span itemProp="deliveryLeadTime">{plan.delivery}</span></span>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-400 mb-6 leading-relaxed text-sm">{plan.description}</p>
+                <p className="text-gray-400 mb-6 leading-relaxed text-sm" itemProp="description">{plan.description}</p>
 
                 {/* Features List */}
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-3 mb-8" role="list">
                   {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-gray-300">
+                    <li key={idx} className="flex items-start gap-3 text-gray-300" role="listitem">
                       <svg
                         className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
+                        aria-hidden="true"
                       >
                         <path
                           strokeLinecap="round"
@@ -287,10 +305,15 @@ const Pricing: React.FC = () => {
                 <button
                   onClick={() => scrollToSection('contact')}
                   className="w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 bg-gray-700 hover:bg-green-500 text-white hover:text-black"
+                  aria-label={`Get quote for ${plan.name} package`}
                 >
                   Get Quote
                 </button>
-              </div>
+                
+                <meta itemProp="seller" content="SuperShift Labs" />
+                <meta itemProp="availability" content="https://schema.org/InStock" />
+                <meta itemProp="areaServed" content="Davenport, Iowa, Quad Cities, Midwest" />
+              </article>
             ))}
           </div>
         </div>
@@ -298,47 +321,52 @@ const Pricing: React.FC = () => {
         {/* Add-ons */}
         <div className="mb-12">
           <h3 className="text-3xl font-bold text-white text-center mb-8">
-            <span className="text-green-400">Add-ons</span>
+            <span className="text-green-400">Add-ons</span> &amp; Services
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto" role="list" aria-label="Additional services">
             {addOns.map((addon, index) => (
-              <div
+              <article
                 key={index}
                 className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-green-400/50 transition-all duration-300"
+                itemScope 
+                itemType="https://schema.org/Offer"
+                role="listitem"
               >
-                <h4 className="text-white font-semibold mb-2 text-sm">{addon.name}</h4>
-                <p className="text-green-400 font-bold text-lg">{addon.price}</p>
-              </div>
+                <h4 className="text-white font-semibold mb-2 text-sm" itemProp="name">{addon.name}</h4>
+                <p className="text-green-400 font-bold text-lg" itemProp="price">{addon.price}</p>
+                <meta itemProp="seller" content="SuperShift Labs" />
+                <meta itemProp="availability" content="https://schema.org/InStock" />
+              </article>
             ))}
           </div>
         </div>
 
         {/* All Packages Include */}
-        <div className="text-center bg-gradient-to-br from-green-500/10 to-blue-500/10 border border-green-400/30 rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-white mb-6">
+        <aside className="text-center bg-gradient-to-br from-green-500/10 to-blue-500/10 border border-green-400/30 rounded-2xl p-8" aria-labelledby="included-heading">
+          <h3 id="included-heading" className="text-2xl font-bold text-white mb-6">
             All packages <span className="text-green-400">include</span>
           </h3>
-          <div className="flex flex-wrap justify-center gap-8 text-gray-300">
-            <div className="flex items-center gap-3">
-              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <ul className="flex flex-wrap justify-center gap-8 text-gray-300" role="list">
+            <li className="flex items-center gap-3" role="listitem">
+              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               <span className="font-medium">Modern React/Next.js stack</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            </li>
+            <li className="flex items-center gap-3" role="listitem">
+              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               <span className="font-medium">Mobile-first, blazing fast</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            </li>
+            <li className="flex items-center gap-3" role="listitem">
+              <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               <span className="font-medium">Free 30-day post-launch tweaks</span>
-            </div>
-          </div>
-        </div>
+            </li>
+          </ul>
+        </aside>
       </div>
     </section>
   );
