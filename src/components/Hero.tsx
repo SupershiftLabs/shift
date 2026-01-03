@@ -6,6 +6,7 @@ const Hero: React.FC = () => {
   const [showText, setShowText] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMuted, setIsMuted] = useState(true); // Start muted for autoplay
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const { content, loading } = useSiteContent('hero', {
@@ -38,7 +39,7 @@ const Hero: React.FC = () => {
     }
 
     const handleVideoEnd = () => {
-      console.log('Video ended, showing text in 300ms');
+      console.log('✅ Video ended naturally, showing text in 300ms');
       setVideoEnded(true);
       // Show text with animation after video ends
       setTimeout(() => {
@@ -48,24 +49,31 @@ const Hero: React.FC = () => {
 
     // For mobile, show text faster or immediately if video fails
     const handleVideoError = () => {
-      console.log('Video failed to load, showing text immediately');
+      console.log('❌ Video failed to load, showing text immediately');
       setShowText(true);
     };
 
-    // Fallback: Show text after max wait time (useful for slow connections)
-    const maxWaitTimer = setTimeout(() => {
-      console.log('Max wait time reached, showing text');
-      setShowText(true);
-    }, 10000); // 10 seconds max wait
+    // Log when video starts playing
+    const handleVideoPlay = () => {
+      console.log('▶️ Video started playing');
+    };
+
+    // Log video duration when metadata loads
+    const handleLoadedMetadata = () => {
+      console.log(`📹 Video duration: ${video.duration.toFixed(1)} seconds`);
+    };
 
     video.addEventListener('ended', handleVideoEnd);
     video.addEventListener('error', handleVideoError);
+    video.addEventListener('play', handleVideoPlay);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
 
     return () => {
       video.removeEventListener('ended', handleVideoEnd);
       video.removeEventListener('error', handleVideoError);
+      video.removeEventListener('play', handleVideoPlay);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       window.removeEventListener('resize', checkMobile);
-      clearTimeout(maxWaitTimer);
     };
   }, []); // Empty dependency array - only run once on mount
 
@@ -97,7 +105,7 @@ const Hero: React.FC = () => {
       <video 
         ref={videoRef}
         autoPlay
-        muted
+        muted={isMuted}
         playsInline
         preload="auto"
         className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-30' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
@@ -114,6 +122,34 @@ const Hero: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
       </video>
+      
+      {/* Audio Control Button - only show when video is playing and not ended */}
+      {!videoEnded && (
+        <button
+          onClick={() => {
+            const video = videoRef.current;
+            if (video) {
+              video.muted = !isMuted;
+              setIsMuted(!isMuted);
+              console.log(isMuted ? '🔊 Audio enabled' : '🔇 Audio muted');
+            }
+          }}
+          className="absolute top-4 right-4 z-20 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-300 backdrop-blur-sm border border-white/20 group"
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
+          title={isMuted ? "Click to enable audio" : "Click to mute audio"}
+        >
+          {isMuted ? (
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+          )}
+        </button>
+      )}
       
       <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/Organization">
         <header className="mb-4 sm:mb-6">
