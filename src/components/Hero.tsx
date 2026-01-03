@@ -8,6 +8,8 @@ const Hero: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  console.log('🎬 Hero render - showText:', showText, 'videoEnded:', videoEnded);
+
   const { content, loading } = useSiteContent('hero', {
     title: 'SuperShift Labs',
     subtitle: 'Web Development & Mobile Apps | Davenport, Iowa',
@@ -39,13 +41,17 @@ const Hero: React.FC = () => {
 
     // Try to play with audio, fall back to muted if blocked
     const tryPlayWithAudio = async () => {
+      if (!video) return;
+      
       try {
+        console.log('🔊 Attempting to unmute video...');
         // Video is already playing muted due to autoPlay
         // Try to unmute it
         video.muted = false;
-        console.log('🔊 Audio enabled');
+        video.volume = 1.0; // Set volume to maximum
+        console.log('✅ Audio UNMUTED - volume set to', video.volume);
       } catch (error) {
-        console.log('🔇 Could not enable audio, keeping muted');
+        console.error('❌ Could not enable audio:', error);
       }
     };
 
@@ -54,14 +60,16 @@ const Hero: React.FC = () => {
       setVideoEnded(true);
       // Show text with animation after video ends
       setTimeout(() => {
+        console.log('👁️ NOW SHOWING TEXT');
         setShowText(true);
       }, 300);
     };
 
     // For mobile, show text faster or immediately if video fails
     const handleVideoError = () => {
-      console.log('❌ Video failed to load, showing text immediately');
-      setShowText(true);
+      console.log('❌ Video failed to load, but will NOT show text until video ends or timer expires');
+      // DON'T show text immediately - let it stay hidden
+      // Text will only show when video actually ends
     };
 
     // Log when video starts playing
