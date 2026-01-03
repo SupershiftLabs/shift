@@ -180,7 +180,7 @@ const Hero: React.FC = () => {
         autoPlay
         muted
         playsInline
-        preload="metadata"
+        preload="none"
         className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-0' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
         poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         aria-hidden="true"

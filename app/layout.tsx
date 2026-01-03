@@ -345,6 +345,17 @@ export default function RootLayout({
           .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
         ` }} />
         
+        {/* Defer non-critical scripts */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.addEventListener('load', function() {
+            // Defer video loading until page is loaded
+            const video = document.querySelector('video[preload="none"]');
+            if (video) {
+              video.setAttribute('preload', 'metadata');
+            }
+          });
+        ` }} />
+        
         {/* DNS Prefetch - Resolve DNS as early as possible */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />

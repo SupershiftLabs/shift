@@ -42,12 +42,21 @@ const nextConfig = {
   output: 'standalone',
   // Optimize CSS
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', '@supabase/supabase-js'],
   },
   // Enable compression
   compress: true,
   // Optimize production builds
-  productionBrowserSourceMaps: true, // Enable source maps for debugging
+  productionBrowserSourceMaps: false, // Disable source maps to reduce bundle size
+  // Reduce unused code
+  modularizeImports: {
+    '@supabase/supabase-js': {
+      transform: '@supabase/supabase-js',
+    },
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{member}}',
+    },
+  },
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
     // Optimize CSS in production
@@ -58,9 +67,12 @@ const nextConfig = {
         usedExports: true,
         sideEffects: true,
         minimize: true,
+        moduleIds: 'deterministic',
         splitChunks: {
           ...config.optimization.splitChunks,
           chunks: 'all',
+          maxInitialRequests: 25,
+          minSize: 20000,
           cacheGroups: {
             ...config.optimization.splitChunks?.cacheGroups,
             // Bundle all CSS into one file
@@ -71,12 +83,20 @@ const nextConfig = {
               enforce: true,
               priority: 30,
             },
+            // Separate Supabase code (used only on some pages)
+            supabase: {
+              test: /[\\/]node_modules[\\/]@supabase[\\/]/,
+              name: 'supabase',
+              chunks: 'async',
+              priority: 35,
+            },
             // Separate vendor code
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: 'vendor',
               chunks: 'all',
               priority: 20,
+              reuseExistingChunk: true,
             },
             // Separate React/Next.js code
             framework: {
@@ -84,9 +104,17 @@ const nextConfig = {
               name: 'framework',
               chunks: 'all',
               priority: 40,
+              reuseExistingChunk: true,
             },
           },
         },
+      }
+      
+      // Add alias to reduce bundle size
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'react/jsx-runtime.js': 'react/jsx-runtime',
+        'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
       }
     }
     
