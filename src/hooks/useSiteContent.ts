@@ -4,7 +4,7 @@ import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 
 export function useSiteContent(section: string, fallback: any = {}) {
   const [content, setContent] = useState(fallback);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Changed to false - don't block rendering
 
   useEffect(() => {
     const loadContent = async () => {

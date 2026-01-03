@@ -1,21 +1,29 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero: React.FC = () => {
-  const [showText, setShowText] = useState(false);
+  const componentId = useRef(Math.random().toString(36).substr(2, 9));
+  const [showText, setShowText] = useState(() => {
+    console.log(`🎬 [INIT] Initializing showText to FALSE`);
+    return false;
+  });
   const [videoEnded, setVideoEnded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  console.log('🎬 Hero render - showText:', showText, 'videoEnded:', videoEnded);
-
-  const { content, loading } = useSiteContent('hero', {
+  // Memoize fallback to prevent infinite re-renders
+  const fallbackContent = useMemo(() => ({
     title: 'SuperShift Labs',
     subtitle: 'Web Development & Mobile Apps | Davenport, Iowa',
     description: 'Leading web development and mobile app agency in Davenport, Iowa. We craft exceptional digital experiences through innovative web development, mobile apps, and cloud solutions that drive business transformation. Serving Iowa businesses with modern technology solutions.',
     cta_text: 'Get Started'
-  });
+  }), []);
+
+  console.log(`🎬 [${componentId.current}] Hero render - showText:`, showText, 'videoEnded:', videoEnded, 'audioEnabled:', audioEnabled);
+
+  const { content, loading } = useSiteContent('hero', fallbackContent);
 
   useEffect(() => {
     // Detect mobile device
@@ -26,18 +34,44 @@ const Hero: React.FC = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
+    // Try to unmute on any user interaction
+    const handleFirstInteraction = () => {
+      const video = videoRef.current;
+      if (video && !audioEnabled) {
+        console.log('🔊 User interacted, attempting to unmute...');
+        video.muted = false;
+        video.volume = 1.0;
+        setAudioEnabled(true);
+        console.log('✅ Audio unmuted after user interaction');
+        
+        // Remove listeners after first interaction
+        document.removeEventListener('click', handleFirstInteraction);
+        document.removeEventListener('touchstart', handleFirstInteraction);
+        document.removeEventListener('keydown', handleFirstInteraction);
+      }
+    };
+
+    // Listen for any user interaction
+    document.addEventListener('click', handleFirstInteraction);
+    document.addEventListener('touchstart', handleFirstInteraction);
+    document.addEventListener('keydown', handleFirstInteraction);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+    };
+  }, [audioEnabled]);
+
+  useEffect(() => {
     const video = videoRef.current;
     if (!video) {
-      // If no video, show text after brief delay
-      const noVideoTimer = setTimeout(() => {
-        setShowText(true);
-      }, 500);
-      
-      return () => {
-        window.removeEventListener('resize', checkMobile);
-        clearTimeout(noVideoTimer);
-      };
+      console.log(`⚠️ [${componentId.current}] Video ref not ready yet, waiting...`);
+      return;
     }
+    
+    console.log(`✅ [${componentId.current}] Video element found, setting up event listeners`);
 
     // Try to play with audio, fall back to muted if blocked
     const tryPlayWithAudio = async () => {
@@ -56,11 +90,11 @@ const Hero: React.FC = () => {
     };
 
     const handleVideoEnd = () => {
-      console.log('✅ Video ended naturally, showing text in 300ms');
+      console.log(`✅ [${componentId.current}] Video ended naturally, showing text in 300ms`);
       setVideoEnded(true);
       // Show text with animation after video ends
       setTimeout(() => {
-        console.log('👁️ NOW SHOWING TEXT');
+        console.log(`👁️ [${componentId.current}] NOW SHOWING TEXT`);
         setShowText(true);
       }, 300);
     };
@@ -94,22 +128,46 @@ const Hero: React.FC = () => {
       video.removeEventListener('error', handleVideoError);
       video.removeEventListener('play', handleVideoPlay);
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      window.removeEventListener('resize', checkMobile);
     };
-  }, []); // Empty dependency array - only run once on mount
+  }, [videoRef.current]); // Re-run when video ref becomes available
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  if (loading) {
-    return (
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-green-900/20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-400"></div>
-      </section>
-    );
-  }
+  const handleEnableAudio = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    try {
+      console.log('🔊 User clicked to enable audio');
+      video.muted = false;
+      video.volume = 1.0;
+      
+      // If video already ended, restart it
+      if (videoEnded) {
+        video.currentTime = 0;
+        await video.play();
+        setVideoEnded(false);
+        setShowText(false);
+      }
+      
+      setAudioEnabled(true);
+      console.log('✅ Audio enabled');
+    } catch (error) {
+      console.error('❌ Failed to enable audio:', error);
+    }
+  };
+
+  // Don't wait for loading - show hero immediately with fallback content
+  // if (loading) {
+  //   return (
+  //     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-green-900/20">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-400"></div>
+  //     </section>
+  //   );
+  // }
 
   return (
     <section 
@@ -122,27 +180,28 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Background Video */}
+      {/* Background Video - hidden after it ends */}
       <video 
         ref={videoRef}
         autoPlay
         muted
         playsInline
         preload="auto"
-        className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-30' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
+        className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-0' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
         poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         aria-hidden="true"
         title="SuperShift Labs modern digital workspace"
         style={{ objectPosition: isMobile ? 'center' : 'center' }}
       >
         <source src="/_users_e6370e0d-ba45-4336-819f-edb18e468e55_generated_dd1c1b0a-dbde-4ed2-bd28-6ee35d4c0dfd_generated_video.MP4" type="video/mp4" />
-        {/* Fallback image if video doesn't load */}
-        <img 
-          src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-          alt="SuperShift Labs Studio - Modern digital workspace with innovative technology in Davenport Iowa"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
       </video>
+      
+      {/* Static fallback image - shown after video ends */}
+      <img 
+        src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+        alt="SuperShift Labs Studio - Modern digital workspace with innovative technology in Davenport Iowa"
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoEnded ? 'opacity-40' : 'opacity-0'}`}
+      />
       
       <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/Organization">
         <header className="mb-4 sm:mb-6">
