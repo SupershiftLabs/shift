@@ -36,8 +36,13 @@ const Navigation: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="cursor-pointer"
+            className="cursor-pointer flex items-center gap-3"
           >
+            <img 
+              src="/logo.png" 
+              alt="SuperShift Labs Logo" 
+              className="h-10 w-10 object-contain"
+            />
             <h1 className={`text-xl font-bold transition-colors ${
               isScrolled ? 'text-white' : 'text-white'
             }`}>

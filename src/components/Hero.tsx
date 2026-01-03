@@ -77,16 +77,9 @@ const Hero: React.FC = () => {
     const tryPlayWithAudio = async () => {
       if (!video) return;
       
-      try {
-        console.log('🔊 Attempting to unmute video...');
-        // Video is already playing muted due to autoPlay
-        // Try to unmute it
-        video.muted = false;
-        video.volume = 1.0; // Set volume to maximum
-        console.log('✅ Audio UNMUTED - volume set to', video.volume);
-      } catch (error) {
-        console.error('❌ Could not enable audio:', error);
-      }
+      // DON'T try to unmute here - it will pause the video!
+      // Only unmute after user interaction
+      console.log('🔇 Video playing muted (will unmute on user click)');
     };
 
     const handleVideoEnd = () => {
@@ -202,6 +195,21 @@ const Hero: React.FC = () => {
         alt="SuperShift Labs Studio - Modern digital workspace with innovative technology in Davenport Iowa"
         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoEnded ? 'opacity-40' : 'opacity-0'}`}
       />
+
+      {/* Unmute icon - bottom right, shows when audio not enabled */}
+      {!audioEnabled && !videoEnded && (
+        <button
+          onClick={handleEnableAudio}
+          className="fixed bottom-8 right-8 z-50 p-3 bg-green-500 hover:bg-green-600 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg animate-pulse"
+          aria-label="Click to unmute audio"
+          title="Click to unmute"
+        >
+          <svg className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217z" />
+            <path d="M12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" />
+          </svg>
+        </button>
+      )}
       
       <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/Organization">
         <header className="mb-4 sm:mb-6">
