@@ -58,17 +58,26 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-white py-16">
+    <footer 
+      className="bg-gray-900 text-white py-16"
+      itemScope 
+      itemType="https://schema.org/WPFooter"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
-          <div>
+          <div 
+            itemScope 
+            itemType="https://schema.org/Organization"
+          >
             <h3 className="text-xl font-bold mb-4">
-              Super<span className="text-green-400">Shift</span> Labs
+              <span itemProp="name">Super<span className="text-green-400">Shift</span> Labs</span>
             </h3>
-            <p className="text-gray-400 leading-relaxed">
-              Transforming businesses through innovative design and development solutions.
+            <p className="text-gray-400 leading-relaxed" itemProp="description">
+              Transforming Iowa businesses through innovative web development and mobile app solutions.
             </p>
-            <div className="flex gap-4 mt-4">
+            <meta itemProp="url" content="https://supershiftlabs.com" />
+            <meta itemProp="areaServed" content="Davenport, Iowa, Quad Cities, Midwest" />
+            <nav className="flex gap-4 mt-4" aria-label="Social media links">
               <SocialIcon 
                 icon="facebook" 
                 href="https://www.facebook.com/profile.php?id=61584803090279" 
@@ -79,16 +88,44 @@ const Footer: React.FC = () => {
                 href="https://www.instagram.com/supershiftlabs/" 
                 label="Follow us on Instagram" 
               />
-            </div>
+            </nav>
           </div>
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">Web Development</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Mobile Apps</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Cloud Backends</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Design & Branding</a></li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('services')}
+                  className="hover:text-white transition-colors"
+                >
+                  Web Development
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('services')}
+                  className="hover:text-white transition-colors"
+                >
+                  Mobile Apps
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('services')}
+                  className="hover:text-white transition-colors"
+                >
+                  Cloud Solutions
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('pricing')}
+                  className="hover:text-white transition-colors"
+                >
+                  View Pricing
+                </button>
+              </li>
             </ul>
           </div>
           
@@ -111,25 +148,52 @@ const Footer: React.FC = () => {
                   Portfolio
                 </button>
               </li>
-              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('faq')}
+                  className="hover:text-white transition-colors"
+                >
+                  FAQ
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('pricing')}
+                  className="hover:text-white transition-colors"
+                >
+                  Pricing
+                </button>
+              </li>
             </ul>
           </div>
           
-          <div>
+          <div 
+            itemScope 
+            itemType="https://schema.org/ContactPoint"
+          >
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="mailto:admin@supershiftlabs.com" className="hover:text-white transition-colors">
+                <a 
+                  href="mailto:admin@supershiftlabs.com" 
+                  className="hover:text-white transition-colors"
+                  itemProp="email"
+                >
                   admin@supershiftlabs.com
                 </a>
               </li>
               <li>
-                <a href="tel:+13195370228" className="hover:text-white transition-colors">
+                <a 
+                  href="tel:+13195370228" 
+                  className="hover:text-white transition-colors"
+                  itemProp="telephone"
+                >
                   +1 319 537 0228
                 </a>
               </li>
-              <li>Davenport, IA, USA</li>
+              <li itemProp="areaServed">Davenport, IA, USA</li>
+              <meta itemProp="contactType" content="customer service" />
+              <meta itemProp="availableLanguage" content="English" />
               <li className="pt-2">
                 <a
                   href="https://wa.me/13195370228"

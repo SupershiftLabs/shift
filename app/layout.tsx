@@ -285,6 +285,36 @@ const breadcrumbSchema = {
       name: 'Home',
       item: siteUrl,
     },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Services',
+      item: `${siteUrl}/#services`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Projects',
+      item: `${siteUrl}/#projects`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      name: 'Pricing',
+      item: `${siteUrl}/#pricing`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 5,
+      name: 'FAQ',
+      item: `${siteUrl}/#faq`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 6,
+      name: 'Contact',
+      item: `${siteUrl}/#contact`,
+    },
   ],
 }
 

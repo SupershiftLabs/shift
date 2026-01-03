@@ -23,7 +23,7 @@ const Navigation: React.FC = () => {
     { name: 'Services', id: 'services' },
     { name: 'Projects', id: 'projects' },
     { name: 'Pricing', id: 'pricing' },
-    { name: 'SEO Check', id: 'seo-checker' },
+    { name: 'FAQ', id: 'faq' },
     { name: 'About', id: 'about' },
     { name: 'Contact', id: 'contact' }
   ];
