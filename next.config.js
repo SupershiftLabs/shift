@@ -39,7 +39,6 @@ const nextConfig = {
   output: 'standalone',
   // Optimize CSS
   experimental: {
-    optimizeCss: true, // Enable CSS optimization
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
   // Enable compression
