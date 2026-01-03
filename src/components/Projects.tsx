@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useSiteContent, useProjects } from '../hooks/useSiteContent';
 
 const Projects: React.FC = () => {
@@ -68,14 +69,17 @@ const Projects: React.FC = () => {
               itemType="https://schema.org/CreativeWork"
               role="listitem"
             >
-              <div className="relative overflow-hidden">
-                <img 
+              <div className="relative overflow-hidden h-48">
+                <Image 
                   src={project.image || '/placeholder.svg'}
                   alt={`${project.title} - ${project.category} project by SuperShift Labs in Davenport, Iowa`}
-                  itemProp="image"
-                  className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-300 hover:scale-110"
                   loading="lazy"
+                  quality={85}
                 />
+                <meta itemProp="image" content={project.image || '/placeholder.svg'} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
                   <div className="flex gap-2">
                     {project.demo_url && (

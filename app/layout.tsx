@@ -5,7 +5,12 @@ import { ThemeProvider } from '../components/theme-provider'
 import { Toaster } from '../components/ui/sonner'
 import CookieConsent from '../src/components/CookieConsent'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap', // Prevents FOIT (Flash of Invisible Text)
+  preload: true,
+  fallback: ['system-ui', 'arial'],
+})
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shift-f5a5ynmd1-adhdsupershifts-projects.vercel.app'
 
@@ -326,12 +331,39 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Resource Hints for Performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Critical CSS inline (above the fold styles) */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          body { margin: 0; background: #111827; color: #fff; }
+          * { box-sizing: border-box; }
+          .dark { color-scheme: dark; }
+          html { scroll-behavior: smooth; }
+          img, video { max-width: 100%; height: auto; }
+        ` }} />
+        
+        {/* DNS Prefetch - Resolve DNS as early as possible */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" />
-        <link rel="preconnect" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" />
         <link rel="dns-prefetch" href="https://d64gsuwffb70l.cloudfront.net" />
+        
+        {/* Preconnect - Establish early connections (TCP + TLS) */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" crossOrigin="anonymous" />
+        
+        {/* Preload Critical Resources - Load critical assets ASAP */}
+        <link 
+          rel="preload" 
+          href="/_next/static/css/app/layout.css" 
+          as="style" 
+          type="text/css"
+        />
+        <link 
+          rel="preload" 
+          href="/_next/static/css/app/page.css" 
+          as="style" 
+          type="text/css"
+        />
         
         {/* Additional Meta Tags */}
         <meta name="theme-color" content="#22c55e" />

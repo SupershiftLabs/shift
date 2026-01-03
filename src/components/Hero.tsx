@@ -174,13 +174,13 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Background Video - hidden after it ends */}
+      {/* Background Video - hidden after it ends, lazy loaded */}
       <video 
         ref={videoRef}
         autoPlay
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-0' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
         poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         aria-hidden="true"

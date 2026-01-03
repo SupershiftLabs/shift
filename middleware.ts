@@ -18,6 +18,18 @@ const RATE_LIMIT_CONFIG = {
   '/api/admin': { requests: 20, windowMs: 60000 }, // 20 requests per minute
 }
 
+// Cache control headers for static assets
+const CACHE_HEADERS = {
+  // Immutable assets (with hash in filename)
+  immutable: 'public, max-age=31536000, immutable',
+  // Static assets (images, fonts)
+  static: 'public, max-age=86400, stale-while-revalidate=604800',
+  // Dynamic pages
+  dynamic: 'public, max-age=0, must-revalidate',
+  // No cache
+  none: 'no-store, no-cache, must-revalidate',
+}
+
 function getRateLimitConfig(pathname: string) {
   // Find the most specific matching config
   for (const [path, config] of Object.entries(RATE_LIMIT_CONFIG)) {
@@ -79,8 +91,23 @@ if (typeof setInterval !== 'undefined') {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  
+  // Create response
+  const response = NextResponse.next()
 
-  // Only apply rate limiting to API routes
+  // Add cache control headers based on path
+  if (pathname.startsWith('/_next/static/')) {
+    // Next.js static assets (JS, CSS) - immutable with hash
+    response.headers.set('Cache-Control', CACHE_HEADERS.immutable)
+  } else if (pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|webp|woff|woff2|ttf|eot)$/)) {
+    // Static assets without hash
+    response.headers.set('Cache-Control', CACHE_HEADERS.static)
+  } else if (!pathname.startsWith('/api/')) {
+    // HTML pages - revalidate
+    response.headers.set('Cache-Control', CACHE_HEADERS.dynamic)
+  }
+
+  // Apply rate limiting to API routes
   if (pathname.startsWith('/api/')) {
     const clientId = getClientIdentifier(request)
     const config = getRateLimitConfig(pathname)
@@ -106,21 +133,15 @@ export function middleware(request: NextRequest) {
     }
 
     // Add rate limit headers to successful responses
-    const response = NextResponse.next()
     const clientData = rateLimitMap.get(clientId)
     if (clientData) {
       response.headers.set('X-RateLimit-Limit', config.requests.toString())
       response.headers.set('X-RateLimit-Remaining', (config.requests - clientData.count).toString())
       response.headers.set('X-RateLimit-Reset', clientData.resetTime.toString())
     }
-    
-    return response
   }
 
   // Security headers for all routes (additional to vercel.json)
-  const response = NextResponse.next()
-  
-  // Add security headers
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('X-Frame-Options', 'DENY')
   response.headers.set('X-XSS-Protection', '1; mode=block')

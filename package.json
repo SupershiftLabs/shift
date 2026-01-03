@@ -8,8 +8,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "preview": "next start"
+    "preview": "next start",
+    "analyze": "ANALYZE=true next build"
   },
+  "browserslist": [
+    ">0.3%",
+    "not dead",
+    "not op_mini all",
+    "last 2 versions",
+    "Chrome >= 90",
+    "Firefox >= 88",
+    "Safari >= 14",
+    "Edge >= 90"
+  ],
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.0",
