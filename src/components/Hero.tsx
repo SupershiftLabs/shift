@@ -4,11 +4,9 @@ import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero: React.FC = () => {
   const componentId = useRef(Math.random().toString(36).substr(2, 9));
-  const [showText, setShowText] = useState(() => {
-    console.log(`🎬 [INIT] Initializing showText to FALSE`);
-    return false;
-  });
-  const [videoEnded, setVideoEnded] = useState(false);
+  // Show text immediately since there's no video
+  const [showText, setShowText] = useState(true);
+  const [videoEnded, setVideoEnded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -173,31 +171,15 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Background Video - hidden after it ends */}
-      <video 
-        ref={videoRef}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-0' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
-        poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-        aria-hidden="true"
-        title="SuperShift Labs modern digital workspace"
-        style={{ objectPosition: isMobile ? 'center' : 'center' }}
-      >
-        <source src="/_users_e6370e0d-ba45-4336-819f-edb18e468e55_generated_dd1c1b0a-dbde-4ed2-bd28-6ee35d4c0dfd_generated_video.MP4" type="video/mp4" />
-      </video>
-      
-      {/* Static fallback image - shown after video ends */}
+      {/* Static background image */}
       <img 
         src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         alt="SuperShift Labs Studio - Modern digital workspace with innovative technology in Davenport Iowa"
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoEnded ? 'opacity-40' : 'opacity-0'}`}
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
       />
 
-      {/* Unmute icon - bottom right, shows when audio not enabled */}
-      {!audioEnabled && !videoEnded && (
+      {/* Unmute icon hidden since no video */}
+      {false && !audioEnabled && !videoEnded && (
         <button
           onClick={handleEnableAudio}
           className="fixed bottom-8 right-8 z-50 p-3 bg-green-500 hover:bg-green-600 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg animate-pulse"
