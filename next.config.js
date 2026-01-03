@@ -44,7 +44,7 @@ const nextConfig = {
   // Enable compression
   compress: true,
   // Optimize production builds
-  productionBrowserSourceMaps: false,
+  productionBrowserSourceMaps: true, // Enable source maps for debugging
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
     // Optimize CSS in production

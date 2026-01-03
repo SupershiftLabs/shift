@@ -351,20 +351,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" crossOrigin="anonymous" />
         
-        {/* Preload Critical Resources - Load critical assets ASAP */}
-        <link 
-          rel="preload" 
-          href="/_next/static/css/app/layout.css" 
-          as="style" 
-          type="text/css"
-        />
-        <link 
-          rel="preload" 
-          href="/_next/static/css/app/page.css" 
-          as="style" 
-          type="text/css"
-        />
-        
         {/* Additional Meta Tags */}
         <meta name="theme-color" content="#22c55e" />
         <meta name="mobile-web-app-capable" content="yes" />
