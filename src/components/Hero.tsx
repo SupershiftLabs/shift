@@ -25,9 +25,20 @@ const Hero: React.FC = () => {
     window.addEventListener('resize', checkMobile);
 
     const video = videoRef.current;
-    if (!video) return;
+    if (!video) {
+      // If no video, show text after brief delay
+      const noVideoTimer = setTimeout(() => {
+        setShowText(true);
+      }, 500);
+      
+      return () => {
+        window.removeEventListener('resize', checkMobile);
+        clearTimeout(noVideoTimer);
+      };
+    }
 
     const handleVideoEnd = () => {
+      console.log('Video ended, showing text in 300ms');
       setVideoEnded(true);
       // Show text with animation after video ends
       setTimeout(() => {
@@ -43,10 +54,8 @@ const Hero: React.FC = () => {
 
     // Fallback: Show text after max wait time (useful for slow connections)
     const maxWaitTimer = setTimeout(() => {
-      if (!showText) {
-        console.log('Max wait time reached, showing text');
-        setShowText(true);
-      }
+      console.log('Max wait time reached, showing text');
+      setShowText(true);
     }, 10000); // 10 seconds max wait
 
     video.addEventListener('ended', handleVideoEnd);
@@ -58,7 +67,7 @@ const Hero: React.FC = () => {
       window.removeEventListener('resize', checkMobile);
       clearTimeout(maxWaitTimer);
     };
-  }, [showText]);
+  }, []); // Empty dependency array - only run once on mount
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
