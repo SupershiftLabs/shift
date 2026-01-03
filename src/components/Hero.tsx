@@ -166,9 +166,10 @@ const Hero: React.FC = () => {
     <section 
       id="home" 
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-green-900/20" 
-      aria-label="SuperShift Labs - Web Development and Mobile Apps in Davenport Iowa"
+      aria-label="SuperShift Labs - Professional Web Development and Mobile App Development Services in Davenport, Iowa"
       itemScope 
-      itemType="https://schema.org/WebPageElement"
+      itemType="https://schema.org/Organization"
+      role="banner"
     >
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
@@ -183,7 +184,7 @@ const Hero: React.FC = () => {
         className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${videoEnded ? 'opacity-0' : 'opacity-40'} ${isMobile ? 'object-cover' : 'object-cover'}`}
         poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         aria-hidden="true"
-        title="SuperShift Labs modern digital workspace"
+        title="SuperShift Labs - Modern web development studio in Davenport, Iowa showcasing innovative technology"
         style={{ objectPosition: isMobile ? 'center' : 'center' }}
       >
         <source src="/_users_e6370e0d-ba45-4336-819f-edb18e468e55_generated_dd1c1b0a-dbde-4ed2-bd28-6ee35d4c0dfd_generated_video.MP4" type="video/mp4" />
@@ -192,11 +193,13 @@ const Hero: React.FC = () => {
       {/* Static fallback image - shown after video ends */}
       <img 
         src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-        alt="SuperShift Labs Studio - Modern digital workspace with innovative technology in Davenport Iowa"
+        alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoEnded ? 'opacity-40' : 'opacity-0'}`}
+        loading="eager"
+        fetchPriority="high"
       />
       
-      <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/Organization">
+      <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
         <header className="mb-4 sm:mb-6">
           <h1 
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 sm:mb-4 leading-tight px-2" 
@@ -214,7 +217,7 @@ const Hero: React.FC = () => {
             className="text-lg sm:text-xl md:text-2xl text-green-200 font-light px-2" 
             itemProp="slogan"
           >
-            {content.subtitle}
+            Professional Web Development &amp; Mobile Apps in Davenport, Iowa
           </h2>
         </header>
         
@@ -222,7 +225,7 @@ const Hero: React.FC = () => {
           className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2" 
           itemProp="description"
         >
-          {content.description}
+          Leading Iowa software agency specializing in custom web applications, mobile app development, and cloud solutions. Serving Davenport, Quad Cities, and businesses across Iowa with modern, scalable technology solutions.
         </p>
         
         <div className="flex justify-center px-4">
@@ -233,16 +236,22 @@ const Hero: React.FC = () => {
               scrollToSection('services');
             }}
             className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-green-500 hover:bg-green-600 active:bg-green-700 text-black font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg shadow-green-500/25 touch-manipulation text-center"
-            aria-label="Explore web development and mobile app services"
+            aria-label="View our web development, mobile app, and cloud services in Davenport, Iowa"
+            itemProp="url"
           >
-            {content.cta_text}
+            Explore Our Services →
           </a>
         </div>
         
-        {/* Hidden structured data for SEO */}
-        <meta itemProp="address" content="Davenport, IA, USA" />
+        {/* Enhanced structured data for SEO */}
+        <meta itemProp="address" content="Davenport, Iowa 52801, USA" />
+        <meta itemProp="addressLocality" content="Davenport" />
+        <meta itemProp="addressRegion" content="Iowa" />
+        <meta itemProp="addressCountry" content="US" />
         <meta itemProp="telephone" content="+1-319-537-0228" />
         <meta itemProp="email" content="admin@supershiftlabs.com" />
+        <meta itemProp="priceRange" content="$$" />
+        <meta itemProp="areaServed" content="Iowa, Davenport, Quad Cities, Midwest" />
         <link itemProp="url" href="https://supershiftlabs.com" />
       </article>
       
