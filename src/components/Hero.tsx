@@ -25,14 +25,25 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-green-900/20" aria-label="Hero section">
-      <div className="absolute inset-0 bg-black/20"></div>
-      <img 
-        src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-        alt="SuperShift Labs Studio - Modern digital workspace with innovative technology"
-        className="absolute inset-0 w-full h-full object-cover opacity-30"
-        loading="eager"
-        fetchPriority="high"
-      />
+      <div className="absolute inset-0 bg-black/40"></div>
+      
+      {/* Background Video */}
+      <video 
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
+        poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+      >
+        <source src="/_users_e6370e0d-ba45-4336-819f-edb18e468e55_generated_dd1c1b0a-dbde-4ed2-bd28-6ee35d4c0dfd_generated_video.MP4" type="video/mp4" />
+        {/* Fallback image if video doesn't load */}
+        <img 
+          src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+          alt="SuperShift Labs Studio - Modern digital workspace with innovative technology"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </video>
       
       <article className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <div className="mb-6">
