@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,11 +39,17 @@ const Navigation: React.FC = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="cursor-pointer flex items-center gap-3"
           >
-            <img 
-              src="/logo.png" 
-              alt="SuperShift Labs Logo" 
-              className="h-10 w-10 object-contain"
-            />
+            <div className="relative h-10 w-10">
+              <Image 
+                src="/logo.png" 
+                alt="SuperShift Labs Logo" 
+                width={40}
+                height={40}
+                className="object-contain"
+                priority
+                quality={90}
+              />
+            </div>
             <div className={`text-xl font-bold transition-colors ${
               isScrolled ? 'text-white' : 'text-white'
             }`}>
@@ -75,8 +82,11 @@ const Navigation: React.FC = () => {
             className={`md:hidden p-2 transition-colors ${
               isScrolled ? 'text-gray-900' : 'text-white'
             }`}
+            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               {isMobileMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -87,7 +97,12 @@ const Navigation: React.FC = () => {
         </div>
         
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white/95 backdrop-blur-sm border-t border-gray-200">
+          <div 
+            id="mobile-menu"
+            className="md:hidden bg-white/95 backdrop-blur-sm border-t border-gray-200"
+            role="navigation"
+            aria-label="Mobile navigation"
+          >
             <div className="py-4 space-y-2">
               {navItems.map((item) => (
                 <button

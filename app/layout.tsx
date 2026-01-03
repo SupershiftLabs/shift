@@ -333,11 +333,16 @@ export default function RootLayout({
       <head>
         {/* Critical CSS inline (above the fold styles) */}
         <style dangerouslySetInnerHTML={{ __html: `
-          body { margin: 0; background: #111827; color: #fff; }
+          body { margin: 0; background: #111827; color: #fff; font-family: system-ui, -apple-system, sans-serif; }
           * { box-sizing: border-box; }
           .dark { color-scheme: dark; }
           html { scroll-behavior: smooth; }
           img, video { max-width: 100%; height: auto; }
+          nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
+          .container { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
+          button { cursor: pointer; border: none; background: none; }
+          a { text-decoration: none; color: inherit; }
+          .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
         ` }} />
         
         {/* DNS Prefetch - Resolve DNS as early as possible */}
@@ -347,9 +352,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://d64gsuwffb70l.cloudfront.net" />
         
         {/* Preconnect - Establish early connections (TCP + TLS) */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" />
+        <link rel="preconnect" href="https://d64gsuwffb70l.cloudfront.net" />
         
         {/* Additional Meta Tags */}
         <meta name="theme-color" content="#22c55e" />

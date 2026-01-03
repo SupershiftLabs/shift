@@ -77,7 +77,7 @@ const Projects: React.FC = () => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-300 hover:scale-110"
                   loading="lazy"
-                  quality={85}
+                  quality={75}
                 />
                 <meta itemProp="image" content={project.image || '/placeholder.svg'} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
