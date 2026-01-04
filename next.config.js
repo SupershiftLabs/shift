@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['images.unsplash.com', 'cdn.pixabay.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -14,16 +13,20 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'pjhrogdbzpqnxhfxxmsb.supabase.co',
+        pathname: '/storage/v1/object/public/**',
       },
       {
         protocol: 'https',
-        hostname: '*.supabase.co',
+        hostname: '**.supabase.co',
+        pathname: '/storage/v1/object/public/**',
       },
       {
         protocol: 'https',
         hostname: 'd64gsuwffb70l.cloudfront.net',
       },
     ],
+    // Add quality configuration
+    qualities: [75, 90],
     // Optimize images with longer cache
     minimumCacheTTL: 31536000, // 1 year
     formats: ['image/webp', 'image/avif'], // Use modern formats

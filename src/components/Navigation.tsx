@@ -47,7 +47,7 @@ const Navigation: React.FC = () => {
                 height={40}
                 className="object-contain"
                 priority
-                quality={90}
+                quality={75}
               />
             </div>
             <div className={`text-xl font-bold transition-colors ${

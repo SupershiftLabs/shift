@@ -93,7 +93,22 @@ const Hero: React.FC = () => {
       role="banner"
     >
       {/* Static background - always present, lowest layer (z-0) */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-black to-gray-900" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        {/* Placeholder fallback image with blur */}
+        <div className="absolute inset-0 opacity-30">
+          <Image
+            src="/logo.png"
+            alt="SuperShift Labs Logo"
+            fill
+            className="object-contain scale-50"
+            priority
+            quality={75}
+            sizes="50vw"
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+          />
+        </div>
+      </div>
       
       {/* Video background - desktop OR mobile (if mobile video exists), above image (z-10) */}
       {!videoPlayed && (
@@ -109,7 +124,6 @@ const Hero: React.FC = () => {
             onError={handleVideoError}
             preload={isMobile ? "metadata" : "auto"}
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-            poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
           >
             {/* Use mobile-optimized video if available, otherwise fallback to desktop video */}
             {isMobile ? (
@@ -120,7 +134,7 @@ const Hero: React.FC = () => {
             ) : (
               <source src="/hero-video.mp4" type="video/mp4" />
             )}
-            {/* Fallback to image if video fails to load */}
+            {/* Fallback to gradient background with logo if video fails to load */}
           </video>
         </div>
       )}
