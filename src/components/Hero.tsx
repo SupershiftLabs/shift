@@ -128,7 +128,7 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability (z-20) */}
       <div className={`absolute inset-0 z-20 ${isMobile ? 'bg-black/50' : 'bg-black/30'}`} role="presentation"></div>
       
-      <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
+      <article className={`relative z-30 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
         <header className="mb-4 sm:mb-6">
           <h1 
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 sm:mb-4 leading-tight px-2" 
