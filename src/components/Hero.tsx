@@ -258,7 +258,7 @@ const Hero: React.FC = () => {
       {/* Scroll button - only show after text appears, hidden on small mobile */}
       {showText && (
         <nav 
-          className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:flex" 
+          className="absolute bottom-8 sm:bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:flex z-10" 
           aria-label="Scroll to content"
         >
           <button 
