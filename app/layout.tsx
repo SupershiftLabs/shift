@@ -12,7 +12,7 @@ const inter = Inter({
   fallback: ['system-ui', 'arial'],
   adjustFontFallback: true, // Reduces layout shift
   variable: '--font-inter',
-  weight: ['400', '600', '700'], // Only load weights we use
+  weight: '400', // Single weight only - use CSS for bold
 })
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shift-f5a5ynmd1-adhdsupershifts-projects.vercel.app'

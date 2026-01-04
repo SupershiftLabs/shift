@@ -121,9 +121,18 @@ const nextConfig = {
         'react/jsx-runtime.js': 'react/jsx-runtime',
         'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
       }
+      
+      // Aggressive minification
+      config.optimization.minimize = true
+      config.optimization.concatenateModules = true
+      config.optimization.providedExports = true
+      config.optimization.usedExports = true
+      config.optimization.sideEffects = true
+      config.optimization.innerGraph = true
+      config.optimization.mangleExports = true
     }
     
-    // Remove unused code (tree shaking)
+    // Remove unused code (tree shaking) - always enabled
     config.optimization.usedExports = true
     
     return config

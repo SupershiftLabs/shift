@@ -57,14 +57,14 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Static background image only - highly optimized for mobile performance */}
+      {/* Static background image only - ultra-optimized for mobile performance */}
       <Image 
         src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
         fill
         className="object-cover opacity-40"
         priority
-        quality={40}
+        quality={25}
         sizes="100vw"
         placeholder="blur"
         blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
