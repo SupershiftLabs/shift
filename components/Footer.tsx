@@ -114,6 +114,11 @@ const Footer: React.FC = () => {
               </li>
               <li><a href="#" className="hover:text-green-400 transition-colors">Careers</a></li>
               <li><a href="#" className="hover:text-green-400 transition-colors">Blog</a></li>
+              <li>
+                <a href="/seo-checker" className="hover:text-green-400 transition-colors">
+                  SEO Checker
+                </a>
+              </li>
             </ul>
           </div>
           
