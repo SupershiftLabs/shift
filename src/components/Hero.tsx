@@ -57,18 +57,35 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Static background image only - ultra-optimized for mobile performance */}
-      <Image 
-        src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-        alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
-        fill
-        className="object-cover opacity-40"
-        priority
-        quality={25}
-        sizes="100vw"
-        placeholder="blur"
-        blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
-      />
+      {/* Video background - falls back to image if video not available */}
+      {!isMobile && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+          {/* Fallback to image if video fails to load */}
+        </video>
+      )}
+      
+      {/* Fallback image for mobile (better performance) */}
+      {isMobile && (
+        <Image 
+          src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+          alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
+          fill
+          className="object-cover opacity-40"
+          priority
+          quality={25}
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
+        />
+      )}
       
       <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
         <header className="mb-4 sm:mb-6">
