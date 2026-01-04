@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { useSiteContent, useProjects } from '../hooks/useSiteContent';
 
@@ -9,6 +9,20 @@ const Projects: React.FC = () => {
   const { projects, loading: projectsLoading } = useProjects();
 
   const loading = contentLoading || projectsLoading;
+
+  // Memoize filtered projects to avoid recalculating on every render
+  const filteredProjects = useMemo(() => {
+    if (!projects || projects.length === 0) return [];
+    return filter === 'all' 
+      ? projects 
+      : projects.filter((p: any) => p.category === filter);
+  }, [projects, filter]);
+
+  // Memoize unique categories to avoid recalculating on every render
+  const categories = useMemo(() => {
+    if (!projects || projects.length === 0) return [];
+    return ['all', ...Array.from(new Set(projects.map((p: any) => p.category)))];
+  }, [projects]);
 
   if (loading) {
     return (
@@ -20,8 +34,6 @@ const Projects: React.FC = () => {
       </section>
     );
   }
-
-  const filteredProjects = filter === 'all' ? projects : projects.filter((p: any) => p.category === filter);
 
   return (
     <section 
@@ -41,7 +53,7 @@ const Projects: React.FC = () => {
           </p>
           
           <div className="flex justify-center gap-4 mb-8" role="tablist" aria-label="Filter projects by category">
-            {['all', 'web', 'mobile'].map((category) => (
+            {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category)}
@@ -124,4 +136,5 @@ const Projects: React.FC = () => {
   );
 };
 
-export default Projects;
+// Wrap with React.memo to prevent unnecessary re-renders
+export default React.memo(Projects);

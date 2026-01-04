@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSiteContent, useServices } from '../hooks/useSiteContent';
 
 const Services: React.FC = () => {
@@ -6,8 +6,8 @@ const Services: React.FC = () => {
   const { services, loading: servicesLoading } = useServices();
   const [selectedService, setSelectedService] = useState<any>(null);
 
-  // Default fallback services data with detailed descriptions
-  const defaultServices = [
+  // Memoize default services to avoid recreating on every render
+  const defaultServices = useMemo(() => [
     {
       icon: '🌐',
       title: 'Web Development',
@@ -68,7 +68,7 @@ const Services: React.FC = () => {
         'Accessibility & responsive design'
       ]
     }
-  ];
+  ], []); // Empty deps array - only create once
 
   const loading = contentLoading || servicesLoading;
 
@@ -247,4 +247,5 @@ const Services: React.FC = () => {
   );
 };
 
-export default Services;
+// Wrap with React.memo to prevent unnecessary re-renders
+export default React.memo(Services);
