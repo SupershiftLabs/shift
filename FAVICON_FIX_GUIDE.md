@@ -1,9 +1,31 @@
 # Favicon Fix - Testing Guide
 
-## Problem
+## Table of Contents
+
+- [Overview](#overview)
+- [What Was Changed](#what-was-changed)
+- [Browser Support](#browser-support)
+- [Testing Instructions](#testing-instructions)
+- [Troubleshooting](#troubleshooting)
+- [Related Resources](#related-resources)
+
+## Overview
+
+This guide explains the favicon issue, the fix applied, and how to test the results.
+
+### Quick Links
+
+- **Internal Files:**
+  - [`app/layout.tsx`](./app/layout.tsx) - Head link tags configuration
+  - [`public/site.webmanifest`](./public/site.webmanifest) - PWA icon manifest
+- **External Resources:**
+  - [MDN - Link Element (Favicons)](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link)
+  - [Web App Manifest Spec](https://developer.mozilla.org/en-US/docs/Web/Manifest)
+
+### Problem
 Favicon not showing on mobile or desktop after complex metadata configuration.
 
-## Solution
+### Solution
 Switched from complex Next.js metadata array structure to explicit HTML `<link>` tags in the `<head>`.
 
 ## What Was Changed
