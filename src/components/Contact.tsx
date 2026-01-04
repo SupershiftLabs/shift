@@ -177,8 +177,8 @@ const Contact: React.FC = () => {
           </p>
         </header>
         
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div>
+        <div className="grid lg:grid-cols-2 gap-12 relative">
+          <div className="relative z-10">
             {error && (
               <div className="mb-6 bg-red-900 border border-red-700 rounded-lg p-4" role="alert">
                 <p className="text-red-300">{error}</p>
@@ -270,7 +270,7 @@ const Contact: React.FC = () => {
           </div>
           
           <aside 
-            className="space-y-8"
+            className="space-y-8 relative z-10"
             itemScope 
             itemType="https://schema.org/LocalBusiness"
           >
@@ -332,38 +332,6 @@ const Contact: React.FC = () => {
                 <span>Chat on WhatsApp</span>
               </div>
             </a>
-            
-            <div className="hidden lg:block">
-              <h4 className="text-lg font-semibold text-white mb-4">Follow SuperShift Labs</h4>
-              <nav className="flex gap-4" aria-label="Social media links">
-                {content.socialLinks?.map((social: any, index: number) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gray-700 hover:bg-green-700 rounded-lg flex items-center justify-center transition-all duration-300 text-gray-300 hover:text-white group"
-                    aria-label={`Follow us on ${social.name}`}
-                  >
-                    <SocialIcon icon={social.icon} name={social.name} />
-                  </a>
-                )) || [
-                  { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/profile.php?id=61584803090279' },
-                  { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/supershiftlabs/' }
-                ].map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gray-700 hover:bg-green-700 rounded-lg flex items-center justify-center transition-all duration-300 text-gray-300 hover:text-white"
-                    aria-label={`Follow us on ${social.name}`}
-                  >
-                    <SocialIcon icon={social.icon} name={social.name} />
-                  </a>
-                ))}
-              </nav>
-            </div>
           </aside>
         </div>
       </div>
