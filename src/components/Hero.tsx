@@ -92,49 +92,53 @@ const Hero: React.FC = () => {
       itemType="https://schema.org/Organization"
       role="banner"
     >
-      {/* Darker overlay on mobile for better text readability */}
-      <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
+      {/* Static background image - always present, lowest layer (z-0) */}
+      <div className="absolute inset-0 z-0">
+        <Image 
+          src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+          alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
+          fill
+          className="object-cover"
+          priority
+          quality={25}
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
+        />
+      </div>
       
-      {/* Static background image - always present */}
-      <Image 
-        src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-        alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
-        fill
-        className="object-cover opacity-40"
-        priority
-        quality={25}
-        sizes="100vw"
-        placeholder="blur"
-        blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
-      />
-      
-      {/* Video background - desktop OR mobile (if mobile video exists) */}
+      {/* Video background - desktop OR mobile (if mobile video exists), above image (z-10) */}
       {!videoPlayed && (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop={false}
-          playsInline
-          onEnded={handleVideoEnd}
-          onLoadedData={handleVideoLoaded}
-          onError={handleVideoError}
-          preload={isMobile ? "metadata" : "auto"}
-          className={`absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-1000 ${videoPlayed ? 'opacity-0' : 'opacity-40'}`}
-          poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-        >
-          {/* Use mobile-optimized video if available, otherwise fallback to desktop video */}
-          {isMobile ? (
-            <>
-              <source src="/hero-video-mobile.mp4" type="video/mp4" />
+        <div className="absolute inset-0 z-10">
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop={false}
+            playsInline
+            onEnded={handleVideoEnd}
+            onLoadedData={handleVideoLoaded}
+            onError={handleVideoError}
+            preload={isMobile ? "metadata" : "auto"}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+          >
+            {/* Use mobile-optimized video if available, otherwise fallback to desktop video */}
+            {isMobile ? (
+              <>
+                <source src="/hero-video-mobile.mp4" type="video/mp4" />
+                <source src="/hero-video.mp4" type="video/mp4" />
+              </>
+            ) : (
               <source src="/hero-video.mp4" type="video/mp4" />
-            </>
-          ) : (
-            <source src="/hero-video.mp4" type="video/mp4" />
-          )}
-          {/* Fallback to image if video fails to load */}
-        </video>
+            )}
+            {/* Fallback to image if video fails to load */}
+          </video>
+        </div>
       )}
+      
+      {/* Darker overlay on mobile for better text readability (z-20) */}
+      <div className={`absolute inset-0 z-20 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
       <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
         <header className="mb-4 sm:mb-6">
