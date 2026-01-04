@@ -38,8 +38,8 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Modern JavaScript output
-  output: 'standalone',
+  // Modern JavaScript output - target ES2020 to eliminate polyfills
+  transpilePackages: [],
   // Optimize CSS
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', '@supabase/supabase-js'],

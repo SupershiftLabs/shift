@@ -1,15 +1,11 @@
 "use client";
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero: React.FC = () => {
-  const componentId = useRef(Math.random().toString(36).substr(2, 9));
-  const [showText, setShowText] = useState(true); // Changed to true - show text immediately
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [showText] = useState(true); // Show text immediately - no video loading
   const [isMobile, setIsMobile] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Memoize fallback to prevent infinite re-renders
   const fallbackContent = useMemo(() => ({
@@ -18,8 +14,6 @@ const Hero: React.FC = () => {
     description: 'Leading web development and mobile app agency in Davenport, Iowa. We craft exceptional digital experiences through innovative web development, mobile apps, and cloud solutions that drive business transformation. Serving Iowa businesses with modern technology solutions.',
     cta_text: 'Get Started'
   }), []);
-
-  console.log(`🎬 [${componentId.current}] Hero render - showText:`, showText, 'videoEnded:', videoEnded, 'audioEnabled:', audioEnabled);
 
   const { content, loading } = useSiteContent('hero', fallbackContent);
 
@@ -32,123 +26,14 @@ const Hero: React.FC = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // Try to unmute on any user interaction
-    const handleFirstInteraction = () => {
-      const video = videoRef.current;
-      if (video && !audioEnabled) {
-        console.log('🔊 User interacted, attempting to unmute...');
-        video.muted = false;
-        video.volume = 1.0;
-        setAudioEnabled(true);
-        console.log('✅ Audio unmuted after user interaction');
-        
-        // Remove listeners after first interaction
-        document.removeEventListener('click', handleFirstInteraction);
-        document.removeEventListener('touchstart', handleFirstInteraction);
-        document.removeEventListener('keydown', handleFirstInteraction);
-      }
-    };
-
-    // Listen for any user interaction
-    document.addEventListener('click', handleFirstInteraction);
-    document.addEventListener('touchstart', handleFirstInteraction);
-    document.addEventListener('keydown', handleFirstInteraction);
-
     return () => {
       window.removeEventListener('resize', checkMobile);
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-      document.removeEventListener('keydown', handleFirstInteraction);
     };
-  }, [audioEnabled]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) {
-      console.log(`⚠️ [${componentId.current}] Video ref not ready yet, waiting...`);
-      return;
-    }
-    
-    console.log(`✅ [${componentId.current}] Video element found, setting up event listeners`);
-
-    // Try to play with audio, fall back to muted if blocked
-    const tryPlayWithAudio = async () => {
-      if (!video) return;
-      
-      // DON'T try to unmute here - it will pause the video!
-      // Only unmute after user interaction
-      console.log('🔇 Video playing muted (will unmute on user click)');
-    };
-
-    const handleVideoEnd = () => {
-      console.log(`✅ [${componentId.current}] Video ended naturally, showing text in 300ms`);
-      setVideoEnded(true);
-      // Show text with animation after video ends
-      setTimeout(() => {
-        console.log(`👁️ [${componentId.current}] NOW SHOWING TEXT`);
-        setShowText(true);
-      }, 300);
-    };
-
-    // For mobile, show text faster or immediately if video fails
-    const handleVideoError = () => {
-      console.log('❌ Video failed to load, but will NOT show text until video ends or timer expires');
-      // DON'T show text immediately - let it stay hidden
-      // Text will only show when video actually ends
-    };
-
-    // Log when video starts playing
-    const handleVideoPlay = () => {
-      console.log('▶️ Video started playing');
-      // Try to unmute after video starts
-      tryPlayWithAudio();
-    };
-
-    // Log video duration when metadata loads
-    const handleLoadedMetadata = () => {
-      console.log(`📹 Video duration: ${video.duration.toFixed(1)} seconds`);
-    };
-
-    video.addEventListener('ended', handleVideoEnd);
-    video.addEventListener('error', handleVideoError);
-    video.addEventListener('play', handleVideoPlay);
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
-
-    return () => {
-      video.removeEventListener('ended', handleVideoEnd);
-      video.removeEventListener('error', handleVideoError);
-      video.removeEventListener('play', handleVideoPlay);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-    };
-  }, [videoRef.current]); // Re-run when video ref becomes available
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleEnableAudio = async () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    try {
-      console.log('🔊 User clicked to enable audio');
-      video.muted = false;
-      video.volume = 1.0;
-      
-      // If video already ended, restart it
-      if (videoEnded) {
-        video.currentTime = 0;
-        await video.play();
-        setVideoEnded(false);
-        setShowText(false);
-      }
-      
-      setAudioEnabled(true);
-      console.log('✅ Audio enabled');
-    } catch (error) {
-      console.error('❌ Failed to enable audio:', error);
-    }
   };
 
   // Don't wait for loading - show hero immediately with fallback content

@@ -10,6 +10,8 @@ const inter = Inter({
   display: 'swap', // Prevents FOIT (Flash of Invisible Text)
   preload: true,
   fallback: ['system-ui', 'arial'],
+  adjustFontFallback: true, // Reduces layout shift
+  variable: '--font-inter',
 })
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shift-f5a5ynmd1-adhdsupershifts-projects.vercel.app'

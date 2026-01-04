@@ -12,14 +12,12 @@
     "analyze": "ANALYZE=true next build"
   },
   "browserslist": [
-    ">0.3%",
+    "Chrome >= 95",
+    "Firefox >= 95",
+    "Safari >= 15",
+    "Edge >= 95",
     "not dead",
-    "not op_mini all",
-    "last 2 versions",
-    "Chrome >= 90",
-    "Firefox >= 88",
-    "Safari >= 14",
-    "Edge >= 90"
+    "not IE 11"
   ],
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
