@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { useSiteContent } from '../hooks/useSiteContent';
 
@@ -40,16 +40,16 @@ const Hero: React.FC = () => {
   }, []);
 
   // Handle video end event
-  const handleVideoEnd = () => {
+  const handleVideoEnd = useCallback(() => {
     setVideoPlayed(true);
     setShowText(true);
     // Don't loop - let video element fade out and show static image
-  };
+  }, []);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   // Don't wait for loading - show hero immediately with fallback content
   // if (loading) {
@@ -161,4 +161,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default React.memo(Hero);
