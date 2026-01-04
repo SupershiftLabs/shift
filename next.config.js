@@ -37,12 +37,15 @@ const nextConfig = {
   swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+    // Remove React DevTools in production
+    reactRemoveProperties: process.env.NODE_ENV === 'production',
   },
   // Modern JavaScript output - target ES2020 to eliminate polyfills
   transpilePackages: [],
-  // Optimize CSS
+  // Optimize CSS and packages
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', '@supabase/supabase-js'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', '@supabase/supabase-js', 'react-hook-form', 'zod'],
+    turbo: {}, // Enable Turbopack for faster builds
   },
   // Enable compression
   compress: true,
@@ -61,18 +64,20 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     // Optimize CSS in production
     if (!dev && !isServer) {
-      // Tree shaking and dead code elimination
+      // Aggressive tree shaking and dead code elimination
       config.optimization = {
         ...config.optimization,
         usedExports: true,
         sideEffects: true,
         minimize: true,
         moduleIds: 'deterministic',
+        runtimeChunk: 'single', // Single runtime chunk
         splitChunks: {
           ...config.optimization.splitChunks,
           chunks: 'all',
-          maxInitialRequests: 25,
-          minSize: 20000,
+          maxInitialRequests: 30,
+          minSize: 15000,
+          maxSize: 250000, // Split large chunks
           cacheGroups: {
             ...config.optimization.splitChunks?.cacheGroups,
             // Bundle all CSS into one file
