@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import * as cheerio from 'cheerio';
+
+// Google PageSpeed Insights API
+const PAGESPEED_API_URL = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+const API_KEY = process.env.GOOGLE_PAGESPEED_API_KEY || ''; // Optional: works without key but with rate limits
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,207 +16,158 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate URL
-    let targetUrl: URL;
+    let targetUrl: string;
     try {
-      targetUrl = new URL(url);
+      const urlObj = new URL(url);
+      targetUrl = urlObj.toString();
     } catch {
       return NextResponse.json(
-        { error: 'Invalid URL format' },
+        { error: 'Invalid URL format. Please include http:// or https://' },
         { status: 400 }
       );
     }
 
-    // Fetch the webpage
-    const response = await fetch(targetUrl.toString(), {
+    // Fetch data from PageSpeed Insights for both mobile and desktop
+    const [mobileResult, desktopResult] = await Promise.all([
+      fetchPageSpeedData(targetUrl, 'mobile'),
+      fetchPageSpeedData(targetUrl, 'desktop')
+    ]);
+
+    if (!mobileResult.success || !desktopResult.success) {
+      return NextResponse.json(
+        { error: mobileResult.error || desktopResult.error || 'Failed to analyze URL' },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      mobile: mobileResult.data,
+      desktop: desktopResult.data,
+      url: targetUrl,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('PageSpeed API Error:', error);
+    return NextResponse.json(
+      { error: 'Failed to analyze page. Please try again later.' },
+      { status: 500 }
+    );
+  }
+}
+
+async function fetchPageSpeedData(url: string, strategy: 'mobile' | 'desktop') {
+  try {
+    // Build URL with all categories
+    const params = new URLSearchParams({
+      url,
+      strategy,
+    });
+
+    // Add all categories
+    params.append('category', 'performance');
+    params.append('category', 'accessibility');
+    params.append('category', 'best-practices');
+    params.append('category', 'seo');
+
+    if (API_KEY) {
+      params.append('key', API_KEY);
+    }
+
+    const response = await fetch(`${PAGESPEED_API_URL}?${params.toString()}`, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; SuperShift SEO Checker/1.0)',
+        'Content-Type': 'application/json',
       },
     });
 
     if (!response.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch URL: ${response.status}` },
-        { status: 400 }
-      );
+      const errorData = await response.json().catch(() => ({}));
+      return {
+        success: false,
+        error: errorData.error?.message || `HTTP ${response.status}: ${response.statusText}`
+      };
     }
 
-    const html = await response.text();
-    const $ = cheerio.load(html);
+    const data = await response.json();
+    
+    // Extract key metrics
+    const lighthouse = data.lighthouseResult;
+    const categories = lighthouse?.categories || {};
+    const audits = lighthouse?.audits || {};
 
-    // Analyze SEO metrics
-    const totalImages = $('img').length;
-    const imagesWithoutAlt = $('img:not([alt]), img[alt=""]').length;
-    const imagesWithAlt = totalImages - imagesWithoutAlt;
+    // Performance metrics
+    const metrics = {
+      // Scores (0-100)
+      performance: Math.round((categories.performance?.score || 0) * 100),
+      accessibility: Math.round((categories.accessibility?.score || 0) * 100),
+      bestPractices: Math.round((categories['best-practices']?.score || 0) * 100),
+      seo: Math.round((categories.seo?.score || 0) * 100),
 
-    const analysis = {
-      // Title
-      title: $('title').text() || '',
-      titleLength: $('title').text().length,
-      
-      // Meta description
-      description: $('meta[name="description"]').attr('content') || '',
-      descriptionLength: ($('meta[name="description"]').attr('content') || '').length,
-      
-      // Headings
-      h1Count: $('h1').length,
-      h2Count: $('h2').length,
-      h3Count: $('h3').length,
-      totalHeadings: $('h1, h2, h3, h4, h5, h6').length,
-      
-      // Images
-      totalImages,
-      imagesWithoutAlt,
-      imagesWithAlt,
-      
-      // Links
-      totalLinks: $('a').length,
-      internalLinks: $('a[href^="/"], a[href^="' + targetUrl.origin + '"]').length,
-      externalLinks: $('a[href^="http"]').not('[href^="' + targetUrl.origin + '"]').length,
-      
-      // Open Graph
-      hasOgTitle: $('meta[property="og:title"]').length > 0,
-      hasOgDescription: $('meta[property="og:description"]').length > 0,
-      hasOgImage: $('meta[property="og:image"]').length > 0,
-      
-      // Twitter Cards
-      hasTwitterCard: $('meta[name="twitter:card"]').length > 0,
-      
-      // Structured Data
-      hasStructuredData: $('script[type="application/ld+json"]').length > 0,
-      structuredDataCount: $('script[type="application/ld+json"]').length,
-      
-      // Technical
-      hasViewport: $('meta[name="viewport"]').length > 0,
-      hasCanonical: $('link[rel="canonical"]').length > 0,
-      hasRobots: $('meta[name="robots"]').length > 0,
-      
-      // Performance hints
-      hasPreconnect: $('link[rel="preconnect"]').length,
-      hasDnsPrefetch: $('link[rel="dns-prefetch"]').length,
+      // Core Web Vitals
+      lcp: audits['largest-contentful-paint']?.displayValue || 'N/A',
+      lcpScore: audits['largest-contentful-paint']?.score || 0,
+      fid: audits['max-potential-fid']?.displayValue || 'N/A',
+      fidScore: audits['max-potential-fid']?.score || 0,
+      cls: audits['cumulative-layout-shift']?.displayValue || 'N/A',
+      clsScore: audits['cumulative-layout-shift']?.score || 0,
+      fcp: audits['first-contentful-paint']?.displayValue || 'N/A',
+      fcpScore: audits['first-contentful-paint']?.score || 0,
+      tti: audits['interactive']?.displayValue || 'N/A',
+      ttiScore: audits['interactive']?.score || 0,
+      si: audits['speed-index']?.displayValue || 'N/A',
+      siScore: audits['speed-index']?.score || 0,
+      tbt: audits['total-blocking-time']?.displayValue || 'N/A',
+      tbtScore: audits['total-blocking-time']?.score || 0,
+
+      // Opportunities (top 5 improvements)
+      opportunities: Object.values(audits)
+        .filter((audit: any) => 
+          audit.score !== null && 
+          audit.score < 0.9 && 
+          audit.details?.overallSavingsMs && 
+          audit.details.overallSavingsMs > 0
+        )
+        .sort((a: any, b: any) => 
+          (b.details?.overallSavingsMs || 0) - (a.details?.overallSavingsMs || 0)
+        )
+        .slice(0, 5)
+        .map((audit: any) => ({
+          title: audit.title,
+          description: audit.description,
+          savings: audit.displayValue || `${audit.details?.overallSavingsMs}ms`
+        })),
+
+      // Diagnostics (warnings and issues)
+      diagnostics: Object.values(audits)
+        .filter((audit: any) => 
+          audit.score !== null && 
+          audit.score < 1 && 
+          audit.details?.items && 
+          audit.details.items.length > 0
+        )
+        .slice(0, 5)
+        .map((audit: any) => ({
+          title: audit.title,
+          description: audit.description,
+          itemsCount: audit.details?.items?.length || 0
+        })),
+
+      // Screenshot and other data
+      screenshot: lighthouse?.audits?.['final-screenshot']?.details?.data || null,
+      fetchTime: lighthouse?.fetchTime || new Date().toISOString(),
     };
 
-    // Calculate SEO score
-    let score = 0;
-    const recommendations: string[] = [];
-
-    // Title (15 points)
-    if (analysis.title) {
-      if (analysis.titleLength >= 30 && analysis.titleLength <= 60) {
-        score += 15;
-      } else if (analysis.titleLength > 0) {
-        score += 8;
-        recommendations.push(`Title length (${analysis.titleLength}) should be between 30-60 characters`);
-      }
-    } else {
-      recommendations.push('Add a page title tag');
-    }
-
-    // Meta Description (15 points)
-    if (analysis.description) {
-      if (analysis.descriptionLength >= 120 && analysis.descriptionLength <= 160) {
-        score += 15;
-      } else if (analysis.descriptionLength > 0) {
-        score += 8;
-        recommendations.push(`Meta description length (${analysis.descriptionLength}) should be between 120-160 characters`);
-      }
-    } else {
-      recommendations.push('Add a meta description');
-    }
-
-    // Headings (10 points)
-    if (analysis.h1Count === 1) {
-      score += 5;
-    } else if (analysis.h1Count === 0) {
-      recommendations.push('Add exactly one H1 heading');
-    } else {
-      recommendations.push(`Found ${analysis.h1Count} H1 tags, should have exactly one`);
-    }
-    if (analysis.totalHeadings >= 3) {
-      score += 5;
-    } else {
-      recommendations.push('Use more heading tags (H2, H3) for better structure');
-    }
-
-    // Images (10 points)
-    if (analysis.totalImages > 0) {
-      const altPercentage = (analysis.imagesWithAlt / analysis.totalImages) * 100;
-      if (altPercentage === 100) {
-        score += 10;
-      } else if (altPercentage >= 80) {
-        score += 7;
-        recommendations.push(`${analysis.imagesWithoutAlt} images missing alt text`);
-      } else {
-        score += 3;
-        recommendations.push(`${analysis.imagesWithoutAlt} images missing alt text - add descriptive alt attributes`);
-      }
-    }
-
-    // Links (5 points)
-    if (analysis.totalLinks >= 5) {
-      score += 5;
-    } else {
-      recommendations.push('Add more internal and external links');
-    }
-
-    // Open Graph (15 points)
-    if (analysis.hasOgTitle && analysis.hasOgDescription && analysis.hasOgImage) {
-      score += 15;
-    } else {
-      const missing = [];
-      if (!analysis.hasOgTitle) missing.push('og:title');
-      if (!analysis.hasOgDescription) missing.push('og:description');
-      if (!analysis.hasOgImage) missing.push('og:image');
-      recommendations.push(`Add Open Graph tags: ${missing.join(', ')}`);
-      score += (3 - missing.length) * 5;
-    }
-
-    // Twitter Cards (5 points)
-    if (analysis.hasTwitterCard) {
-      score += 5;
-    } else {
-      recommendations.push('Add Twitter Card meta tags');
-    }
-
-    // Structured Data (15 points)
-    if (analysis.hasStructuredData) {
-      if (analysis.structuredDataCount >= 2) {
-        score += 15;
-      } else {
-        score += 10;
-        recommendations.push('Add more structured data schemas (Organization, LocalBusiness, etc.)');
-      }
-    } else {
-      recommendations.push('Add JSON-LD structured data markup');
-    }
-
-    // Technical SEO (10 points)
-    if (analysis.hasViewport) score += 3;
-    else recommendations.push('Add viewport meta tag for mobile optimization');
-    
-    if (analysis.hasCanonical) score += 3;
-    else recommendations.push('Add canonical link tag');
-    
-    if (analysis.hasRobots) score += 2;
-    else recommendations.push('Add robots meta tag');
-    
-    if (analysis.hasPreconnect > 0 || analysis.hasDnsPrefetch > 0) score += 2;
-    else recommendations.push('Add resource hints (preconnect, dns-prefetch) for better performance');
-
-    // Cap score at 100
-    score = Math.min(score, 100);
-
-    return NextResponse.json({
-      score,
-      url: targetUrl.toString(),
-      analysis,
-      recommendations: recommendations.slice(0, 10), // Top 10 recommendations
-    });
+    return {
+      success: true,
+      data: metrics
+    };
 
   } catch (error) {
-    console.error('SEO Check Error:', error);
-    return NextResponse.json(
-      { error: 'Failed to analyze URL. Please try again.' },
-      { status: 500 }
-    );
+    console.error(`PageSpeed fetch error (${strategy}):`, error);
+    return {
+      success: false,
+      error: 'Failed to fetch PageSpeed data. The service might be temporarily unavailable.'
+    };
   }
 }
