@@ -35,10 +35,20 @@ const Hero: React.FC = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
+    // Fallback: Show text after 10 seconds if video hasn't ended (in case video fails)
+    const fallbackTimer = setTimeout(() => {
+      if (!showText) {
+        console.log('Video timeout - showing text as fallback');
+        setShowText(true);
+        setVideoPlayed(true);
+      }
+    }, 10000);
+
     return () => {
       window.removeEventListener('resize', checkMobile);
+      clearTimeout(fallbackTimer);
     };
-  }, []);
+  }, [showText]);
 
   // Handle video end event
   const handleVideoEnd = useCallback(() => {
@@ -50,6 +60,13 @@ const Hero: React.FC = () => {
   // Handle video loaded event
   const handleVideoLoaded = useCallback(() => {
     setVideoLoaded(true);
+  }, []);
+
+  // Handle video error - show text immediately if video fails to load
+  const handleVideoError = useCallback(() => {
+    console.log('Video failed to load - showing text immediately');
+    setVideoPlayed(true);
+    setShowText(true);
   }, []);
 
   const scrollToSection = useCallback((id: string) => {
@@ -101,8 +118,9 @@ const Hero: React.FC = () => {
           playsInline
           onEnded={handleVideoEnd}
           onLoadedData={handleVideoLoaded}
+          onError={handleVideoError}
           preload={isMobile ? "metadata" : "auto"}
-          className="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-1000"
+          className={`absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-1000 ${videoPlayed ? 'opacity-0' : 'opacity-40'}`}
           poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         >
           {/* Use mobile-optimized video if available, otherwise fallback to desktop video */}
