@@ -333,7 +333,7 @@ const Contact: React.FC = () => {
               </div>
             </a>
             
-            <div>
+            <div className="hidden lg:block">
               <h4 className="text-lg font-semibold text-white mb-4">Follow SuperShift Labs</h4>
               <nav className="flex gap-4" aria-label="Social media links">
                 {content.socialLinks?.map((social: any, index: number) => (
