@@ -48,19 +48,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/logo.png', sizes: '512x512', type: 'image/png' },
-    ],
+    icon: '/favicon.ico',
     shortcut: '/favicon.ico',
-    apple: [
-      { url: '/logo.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      { rel: 'icon', url: '/logo.png', sizes: '192x192', type: 'image/png' },
-      { rel: 'icon', url: '/logo.png', sizes: '512x512', type: 'image/png' },
-    ],
+    apple: '/logo.png',
   },
   manifest: '/site.webmanifest',
   openGraph: {
@@ -380,6 +370,14 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" />
         <link rel="dns-prefetch" href="https://d64gsuwffb70l.cloudfront.net" />
+        
+        {/* Favicon - Multiple formats and sizes */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/logo.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/logo.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+        <link rel="manifest" href="/site.webmanifest" />
         
         {/* Preconnect - Establish early connections (TCP + TLS) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
