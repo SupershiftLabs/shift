@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from 'react';
+import Image from 'next/image';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero: React.FC = () => {
@@ -171,13 +172,15 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Static background image only - video disabled for performance */}
-      <img 
+      {/* Static background image only - video disabled for performance - using Next Image for optimization */}
+      <Image 
         src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
-        className="absolute inset-0 w-full h-full object-cover opacity-40"
-        loading="eager"
-        fetchPriority="high"
+        fill
+        className="object-cover opacity-40"
+        priority
+        quality={60}
+        sizes="100vw"
       />
       
       <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
