@@ -48,9 +48,19 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/logo.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/logo.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      { rel: 'icon', url: '/logo.png', sizes: '192x192', type: 'image/png' },
+      { rel: 'icon', url: '/logo.png', sizes: '512x512', type: 'image/png' },
+    ],
   },
   manifest: '/site.webmanifest',
   openGraph: {
@@ -85,6 +95,12 @@ export const metadata: Metadata = {
     other: {
       'msvalidate.01': '673F60950618C9179C22B6BABA9E21F8',
     },
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'apple-mobile-web-app-title': 'SuperShift Labs',
   },
 }
 
