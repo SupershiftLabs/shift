@@ -1,5 +1,27 @@
 # Mobile Performance: 80 → 90+ Optimization
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Changes](#key-changes)
+- [Detailed Optimizations](#detailed-optimizations)
+  - [Fonts](#fonts)
+  - [Images](#images)
+  - [Code Splitting & SSR](#code-splitting--ssr)
+  - [Webpack Optimizations](#webpack-optimizations)
+- [Testing & Verification](#testing--verification)
+- [Related Documents](#related-documents)
+
+## Overview
+
+This document summarizes the aggressive mobile performance optimizations applied to the project. For the full audit and runbook see [PERFORMANCE_OPTIMIZATION_COMPLETE.md](./PERFORMANCE_OPTIMIZATION_COMPLETE.md) and [NETWORK_PAYLOAD_OPTIMIZATION.md](./NETWORK_PAYLOAD_OPTIMIZATION.md).
+
+### External References
+
+- Lighthouse docs: https://developer.chrome.com/docs/lighthouse/overview/
+- Next.js Image optimization: https://nextjs.org/docs/app/building-your-application/image-optimization
+- MDN: preload & resource hints: https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_and_prerendering
+
 ## Critical Issues Fixed
 
 ### Your Lighthouse Report (Before)

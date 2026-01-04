@@ -271,3 +271,24 @@ curl https://supershiftlabs.com | grep "rel=\"icon\""
 **Status:** Deployed to production
 **URL:** https://supershiftlabs.com
 **Date:** January 3, 2026
+
+## Overview
+
+This guide explains the favicon issue, the fix applied, and how to test the results.
+
+## Quick Links
+
+- Internal: `app/layout.tsx` (head link tags)
+- Internal: `public/site.webmanifest` (PWA icons)
+- External: MDN - Favicons: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+- External: Web App Manifest: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest
+
+### Scope
+
+This document covers desktop and mobile browsers, home-screen icons, and PWA manifest configuration.
+
+### What I changed (brief)
+
+- Replaced a complex metadata array in `app/layout.tsx` with explicit `<link rel="icon">` tags.
+- Updated `public/site.webmanifest` to include proper icon sizes.
+- Added apple-touch-icon for iOS home screen.
