@@ -257,34 +257,31 @@ const Hero: React.FC = () => {
       
       {/* Scroll button - only show after text appears, hidden on small mobile */}
       {showText && (
-        <div 
-          className="absolute inset-x-0 bottom-8 sm:bottom-12 flex justify-center z-10 pointer-events-none"
+        <nav 
+          className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 animate-bounce hidden sm:flex z-10" 
+          aria-label="Scroll to content"
+          style={{position: 'absolute'}}
         >
-          <nav 
-            className="animate-bounce pointer-events-auto hidden sm:flex" 
-            aria-label="Scroll to content"
+          <button 
+            onClick={() => scrollToSection('services')}
+            className="flex flex-col items-center text-white/70 hover:text-white active:text-green-400 transition-colors group touch-manipulation"
+            aria-label="Scroll down to services section"
+            title="Scroll to view our services"
           >
-            <button 
-              onClick={() => scrollToSection('services')}
-              className="flex flex-col items-center text-white/70 hover:text-white active:text-green-400 transition-colors group touch-manipulation"
-              aria-label="Scroll down to services section"
-              title="Scroll to view our services"
+            <span className="text-xs sm:text-sm mb-2 font-light">Scroll to explore</span>
+            <svg 
+              className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-y-1 group-active:translate-y-2 transition-transform" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              aria-hidden="true" 
+              role="img"
             >
-              <span className="text-xs sm:text-sm mb-2 font-light">Scroll to explore</span>
-              <svg 
-                className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-y-1 group-active:translate-y-2 transition-transform" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                aria-hidden="true" 
-                role="img"
-              >
-                <title>Scroll down arrow</title>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </button>
-          </nav>
-        </div>
+              <title>Scroll down arrow</title>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </button>
+        </nav>
       )}
     </section>
   );
