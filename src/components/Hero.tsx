@@ -92,20 +92,8 @@ const Hero: React.FC = () => {
       itemType="https://schema.org/Organization"
       role="banner"
     >
-      {/* Static background image - always present, lowest layer (z-0) */}
-      <div className="absolute inset-0 z-0">
-        <Image 
-          src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-          alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
-          fill
-          className="object-cover opacity-50"
-          priority
-          quality={25}
-          sizes="100vw"
-          placeholder="blur"
-          blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
-        />
-      </div>
+      {/* Static background - always present, lowest layer (z-0) */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-black to-gray-900" />
       
       {/* Video background - desktop OR mobile (if mobile video exists), above image (z-10) */}
       {!videoPlayed && (
