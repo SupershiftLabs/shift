@@ -43,8 +43,9 @@ const SocialIcon: React.FC<{ icon: string; href: string; label: string }> = ({ i
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-12 h-12 bg-gray-800 hover:bg-green-700 rounded-lg flex items-center justify-center transition-colors group"
+      className="w-12 h-12 bg-gray-800 hover:bg-green-700 rounded-lg flex items-center justify-center transition-colors group relative"
       aria-label={label}
+      style={{position: 'relative'}}
     >
       {getIcon()}
     </a>
@@ -77,7 +78,7 @@ const Footer: React.FC = () => {
             </p>
             <meta itemProp="url" content="https://supershiftlabs.com" />
             <meta itemProp="areaServed" content="Davenport, Iowa, Quad Cities, Midwest" />
-            <nav className="flex gap-4 mt-4" aria-label="Social media links">
+            <nav className="flex gap-4 mt-4 relative" aria-label="Social media links" style={{position: 'relative'}}>
               <SocialIcon 
                 icon="facebook" 
                 href="https://www.facebook.com/profile.php?id=61584803090279" 
