@@ -4,10 +4,7 @@ import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero: React.FC = () => {
   const componentId = useRef(Math.random().toString(36).substr(2, 9));
-  const [showText, setShowText] = useState(() => {
-    console.log(`🎬 [INIT] Initializing showText to FALSE`);
-    return false;
-  });
+  const [showText, setShowText] = useState(true); // Changed to true - show text immediately
   const [videoEnded, setVideoEnded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(false);
