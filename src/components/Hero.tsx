@@ -1,11 +1,13 @@
 "use client";
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero: React.FC = () => {
-  const [showText] = useState(true); // Show text immediately - no video loading
+  const [showText, setShowText] = useState(false); // Hide text until video finishes
   const [isMobile, setIsMobile] = useState(false);
+  const [videoPlayed, setVideoPlayed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Memoize fallback to prevent infinite re-renders
   const fallbackContent = useMemo(() => ({
@@ -20,7 +22,13 @@ const Hero: React.FC = () => {
   useEffect(() => {
     // Detect mobile device
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      // On mobile, show text immediately (no video)
+      if (mobile) {
+        setShowText(true);
+        setVideoPlayed(true);
+      }
     };
     
     checkMobile();
@@ -30,6 +38,13 @@ const Hero: React.FC = () => {
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  // Handle video end event
+  const handleVideoEnd = () => {
+    setVideoPlayed(true);
+    setShowText(true);
+    // Don't loop - let video element fade out and show static image
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -57,34 +72,34 @@ const Hero: React.FC = () => {
       {/* Darker overlay on mobile for better text readability */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Video background - falls back to image if video not available */}
-      {!isMobile && (
+      {/* Static background image - always present */}
+      <Image 
+        src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+        alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
+        fill
+        className="object-cover opacity-40"
+        priority
+        quality={25}
+        sizes="100vw"
+        placeholder="blur"
+        blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
+      />
+      
+      {/* Video background - plays once then fades to reveal static image */}
+      {!isMobile && !videoPlayed && (
         <video
+          ref={videoRef}
           autoPlay
           muted
-          loop
+          loop={false}
           playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          onEnded={handleVideoEnd}
+          className="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-1000"
           poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
           {/* Fallback to image if video fails to load */}
         </video>
-      )}
-      
-      {/* Fallback image for mobile (better performance) */}
-      {isMobile && (
-        <Image 
-          src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
-          alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
-          fill
-          className="object-cover opacity-40"
-          priority
-          quality={25}
-          sizes="100vw"
-          placeholder="blur"
-          blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
-        />
       )}
       
       <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
