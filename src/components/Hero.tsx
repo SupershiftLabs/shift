@@ -7,6 +7,7 @@ const Hero: React.FC = () => {
   const [showText, setShowText] = useState(false); // Hide text until video finishes
   const [isMobile, setIsMobile] = useState(false);
   const [videoPlayed, setVideoPlayed] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Memoize fallback to prevent infinite re-renders
@@ -24,10 +25,10 @@ const Hero: React.FC = () => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      // On mobile, show text immediately (no video)
+      // On mobile, don't show text until video ends (or immediately if no video)
       if (mobile) {
-        setShowText(true);
-        setVideoPlayed(true);
+        // Wait for video to load/play on mobile
+        setShowText(false);
       }
     };
     
@@ -44,6 +45,11 @@ const Hero: React.FC = () => {
     setVideoPlayed(true);
     setShowText(true);
     // Don't loop - let video element fade out and show static image
+  }, []);
+
+  // Handle video loaded event
+  const handleVideoLoaded = useCallback(() => {
+    setVideoLoaded(true);
   }, []);
 
   const scrollToSection = useCallback((id: string) => {
@@ -85,8 +91,8 @@ const Hero: React.FC = () => {
         blurDataURL="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA="
       />
       
-      {/* Video background - plays once then fades to reveal static image */}
-      {!isMobile && !videoPlayed && (
+      {/* Video background - desktop OR mobile (if mobile video exists) */}
+      {!videoPlayed && (
         <video
           ref={videoRef}
           autoPlay
@@ -94,10 +100,20 @@ const Hero: React.FC = () => {
           loop={false}
           playsInline
           onEnded={handleVideoEnd}
+          onLoadedData={handleVideoLoaded}
+          preload={isMobile ? "metadata" : "auto"}
           className="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-1000"
           poster="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
+          {/* Use mobile-optimized video if available, otherwise fallback to desktop video */}
+          {isMobile ? (
+            <>
+              <source src="/hero-video-mobile.mp4" type="video/mp4" />
+              <source src="/hero-video.mp4" type="video/mp4" />
+            </>
+          ) : (
+            <source src="/hero-video.mp4" type="video/mp4" />
+          )}
           {/* Fallback to image if video fails to load */}
         </video>
       )}
