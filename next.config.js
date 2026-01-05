@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Add empty turbopack config to silence Next.js 16 warning
-  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -38,8 +36,6 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Modern JavaScript output
-  output: 'standalone',
   // Optimize CSS
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', '@supabase/supabase-js'],
@@ -56,72 +52,6 @@ const nextConfig = {
     'lucide-react': {
       transform: 'lucide-react/dist/esm/icons/{{member}}',
     },
-  },
-  // Webpack optimizations
-  webpack: (config, { dev, isServer }) => {
-    // Optimize CSS in production
-    if (!dev && !isServer) {
-      // Tree shaking and dead code elimination
-      config.optimization = {
-        ...config.optimization,
-        usedExports: true,
-        sideEffects: true,
-        minimize: true,
-        moduleIds: 'deterministic',
-        splitChunks: {
-          ...config.optimization.splitChunks,
-          chunks: 'all',
-          maxInitialRequests: 25,
-          minSize: 20000,
-          cacheGroups: {
-            ...config.optimization.splitChunks?.cacheGroups,
-            // Bundle all CSS into one file
-            styles: {
-              name: 'styles',
-              type: 'css/mini-extract',
-              chunks: 'all',
-              enforce: true,
-              priority: 30,
-            },
-            // Separate Supabase code (used only on some pages)
-            supabase: {
-              test: /[\\/]node_modules[\\/]@supabase[\\/]/,
-              name: 'supabase',
-              chunks: 'async',
-              priority: 35,
-            },
-            // Separate vendor code
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendor',
-              chunks: 'all',
-              priority: 20,
-              reuseExistingChunk: true,
-            },
-            // Separate React/Next.js code
-            framework: {
-              test: /[\\/]node_modules[\\/](react|react-dom|next)[\\/]/,
-              name: 'framework',
-              chunks: 'all',
-              priority: 40,
-              reuseExistingChunk: true,
-            },
-          },
-        },
-      }
-      
-      // Add alias to reduce bundle size
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        'react/jsx-runtime.js': 'react/jsx-runtime',
-        'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
-      }
-    }
-    
-    // Remove unused code (tree shaking)
-    config.optimization.usedExports = true
-    
-    return config
   },
   // Add custom headers for caching
   async headers() {
