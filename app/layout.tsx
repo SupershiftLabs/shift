@@ -12,7 +12,7 @@ const inter = Inter({
   fallback: ['system-ui', 'arial'],
 })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shift-f5a5ynmd1-adhdsupershifts-projects.vercel.app'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://supershiftlabs.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
