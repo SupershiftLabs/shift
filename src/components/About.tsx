@@ -1,20 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 const About: React.FC = () => {
   const { content, loading: contentLoading } = useSiteContent('about');
 
   const loading = contentLoading;
-
-  // Memoize default values to prevent recreation
-  const defaultValues = useMemo(() => [
-    'Skilled & Passionate Team – We bring diverse expertise and fresh thinking to every project.',
-    'Proven Results – Successful projects delivered across different industries in Iowa and beyond.',
-    'Full-Stack Approach – From design to deployment, we handle the entire build.',
-    'Agile & Collaborative – Flexible process with clear communication at every stage.',
-    'Local Iowa Presence – Based in Davenport, serving businesses throughout the Quad Cities and Midwest.',
-    'Ongoing Partnership – Continuous support and optimization beyond launch.'
-  ], []);
 
   if (loading) {
     return (
@@ -67,7 +57,14 @@ const About: React.FC = () => {
           <aside className="bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-700" aria-labelledby="why-choose-heading">
             <h4 id="why-choose-heading" className="text-2xl font-bold text-white mb-6">Why Choose SuperShift Labs?</h4>
             <ul className="space-y-4" role="list">
-              {(content.values || defaultValues).map((point: string, index: number) => (
+              {(content.values || [
+                'Skilled & Passionate Team – We bring diverse expertise and fresh thinking to every project.',
+                'Proven Results – Successful projects delivered across different industries in Iowa and beyond.',
+                'Full-Stack Approach – From design to deployment, we handle the entire build.',
+                'Agile & Collaborative – Flexible process with clear communication at every stage.',
+                'Local Iowa Presence – Based in Davenport, serving businesses throughout the Quad Cities and Midwest.',
+                'Ongoing Partnership – Continuous support and optimization beyond launch.'
+              ]).map((point: string, index: number) => (
                 <li key={index} className="flex items-start gap-3" role="listitem">
                   <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0 shadow-glow" aria-hidden="true"></div>
                   <p className="text-gray-300">{point}</p>
@@ -85,4 +82,4 @@ const About: React.FC = () => {
   );
 };
 
-export default React.memo(About);
+export default About;

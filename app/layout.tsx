@@ -10,9 +10,6 @@ const inter = Inter({
   display: 'swap', // Prevents FOIT (Flash of Invisible Text)
   preload: true,
   fallback: ['system-ui', 'arial'],
-  adjustFontFallback: true, // Reduces layout shift
-  variable: '--font-inter',
-  weight: '400', // Single weight only - use CSS for bold
 })
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shift-f5a5ynmd1-adhdsupershifts-projects.vercel.app'
@@ -48,20 +45,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    shortcut: [{ url: '/favicon.ico' }],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      { rel: 'icon', url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-      { rel: 'icon', url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
-    ],
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
   manifest: '/site.webmanifest',
   openGraph: {
@@ -96,12 +82,6 @@ export const metadata: Metadata = {
     other: {
       'msvalidate.01': '673F60950618C9179C22B6BABA9E21F8',
     },
-  },
-  other: {
-    'mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    'apple-mobile-web-app-title': 'SuperShift Labs',
   },
 }
 
@@ -382,14 +362,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://pjhrogdbzpqnxhfxxmsb.supabase.co" />
         <link rel="dns-prefetch" href="https://d64gsuwffb70l.cloudfront.net" />
         
-        {/* Favicon - Multiple formats and sizes */}
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/logo.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/logo.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        
         {/* Preconnect - Establish early connections (TCP + TLS) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -432,7 +404,11 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider
+          attribute="class"
           defaultTheme="dark"
+          enableSystem={false}
+          forcedTheme="dark"
+          disableTransitionOnChange
         >
           {children}
           <Toaster />

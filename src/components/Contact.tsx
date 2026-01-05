@@ -1,5 +1,4 @@
-"use client";
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { useSiteContent } from '../hooks/useSiteContent';
 
@@ -68,16 +67,14 @@ const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Memoize handleChange to prevent recreation on every render
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
-  }, []);
+  };
 
-  // Memoize handleSubmit to prevent recreation on every render
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
@@ -133,7 +130,7 @@ const Contact: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [formData]); // Add formData as dependency
+  };
 
   if (loading) {
     return (
@@ -342,5 +339,4 @@ const Contact: React.FC = () => {
   );
 };
 
-// Wrap with React.memo to prevent unnecessary re-renders
-export default React.memo(Contact);
+export default Contact;

@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import Image from 'next/image';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero: React.FC = () => {
-  const [showText, setShowText] = useState(false); // Hide text until video finishes
+  const componentId = useRef(Math.random().toString(36).substr(2, 9));
+  const [showText, setShowText] = useState(true); // Changed to true - show text immediately
+  const [videoEnded, setVideoEnded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [videoPlayed, setVideoPlayed] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Memoize fallback to prevent infinite re-renders
@@ -18,61 +18,137 @@ const Hero: React.FC = () => {
     cta_text: 'Get Started'
   }), []);
 
+  console.log(`🎬 [${componentId.current}] Hero render - showText:`, showText, 'videoEnded:', videoEnded, 'audioEnabled:', audioEnabled);
+
   const { content, loading } = useSiteContent('hero', fallbackContent);
 
   useEffect(() => {
     // Detect mobile device
     const checkMobile = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      // On mobile, don't show text until video ends (or immediately if no video)
-      if (mobile) {
-        // Wait for video to load/play on mobile
-        setShowText(false);
-      }
+      setIsMobile(window.innerWidth < 768);
     };
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // Fallback: Show text after 10 seconds if video hasn't ended (in case video fails)
-    const fallbackTimer = setTimeout(() => {
-      if (!showText) {
-        console.log('Video timeout - showing text as fallback');
-        setShowText(true);
-        setVideoPlayed(true);
+    // Try to unmute on any user interaction
+    const handleFirstInteraction = () => {
+      const video = videoRef.current;
+      if (video && !audioEnabled) {
+        console.log('🔊 User interacted, attempting to unmute...');
+        video.muted = false;
+        video.volume = 1.0;
+        setAudioEnabled(true);
+        console.log('✅ Audio unmuted after user interaction');
+        
+        // Remove listeners after first interaction
+        document.removeEventListener('click', handleFirstInteraction);
+        document.removeEventListener('touchstart', handleFirstInteraction);
+        document.removeEventListener('keydown', handleFirstInteraction);
       }
-    }, 10000);
+    };
+
+    // Listen for any user interaction
+    document.addEventListener('click', handleFirstInteraction);
+    document.addEventListener('touchstart', handleFirstInteraction);
+    document.addEventListener('keydown', handleFirstInteraction);
 
     return () => {
       window.removeEventListener('resize', checkMobile);
-      clearTimeout(fallbackTimer);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
     };
-  }, [showText]);
+  }, [audioEnabled]);
 
-  // Handle video end event
-  const handleVideoEnd = useCallback(() => {
-    setVideoPlayed(true);
-    setShowText(true);
-    // Don't loop - let video element fade out and show static image
-  }, []);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) {
+      console.log(`⚠️ [${componentId.current}] Video ref not ready yet, waiting...`);
+      return;
+    }
+    
+    console.log(`✅ [${componentId.current}] Video element found, setting up event listeners`);
 
-  // Handle video loaded event
-  const handleVideoLoaded = useCallback(() => {
-    setVideoLoaded(true);
-  }, []);
+    // Try to play with audio, fall back to muted if blocked
+    const tryPlayWithAudio = async () => {
+      if (!video) return;
+      
+      // DON'T try to unmute here - it will pause the video!
+      // Only unmute after user interaction
+      console.log('🔇 Video playing muted (will unmute on user click)');
+    };
 
-  // Handle video error - show text immediately if video fails to load
-  const handleVideoError = useCallback(() => {
-    console.log('Video failed to load - showing text immediately');
-    setVideoPlayed(true);
-    setShowText(true);
-  }, []);
+    const handleVideoEnd = () => {
+      console.log(`✅ [${componentId.current}] Video ended naturally, showing text in 300ms`);
+      setVideoEnded(true);
+      // Show text with animation after video ends
+      setTimeout(() => {
+        console.log(`👁️ [${componentId.current}] NOW SHOWING TEXT`);
+        setShowText(true);
+      }, 300);
+    };
 
-  const scrollToSection = useCallback((id: string) => {
+    // For mobile, show text faster or immediately if video fails
+    const handleVideoError = () => {
+      console.log('❌ Video failed to load, but will NOT show text until video ends or timer expires');
+      // DON'T show text immediately - let it stay hidden
+      // Text will only show when video actually ends
+    };
+
+    // Log when video starts playing
+    const handleVideoPlay = () => {
+      console.log('▶️ Video started playing');
+      // Try to unmute after video starts
+      tryPlayWithAudio();
+    };
+
+    // Log video duration when metadata loads
+    const handleLoadedMetadata = () => {
+      console.log(`📹 Video duration: ${video.duration.toFixed(1)} seconds`);
+    };
+
+    video.addEventListener('ended', handleVideoEnd);
+    video.addEventListener('error', handleVideoError);
+    video.addEventListener('play', handleVideoPlay);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+    return () => {
+      video.removeEventListener('ended', handleVideoEnd);
+      video.removeEventListener('error', handleVideoError);
+      video.removeEventListener('play', handleVideoPlay);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, [videoRef.current]); // Re-run when video ref becomes available
+
+  const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
+  };
+
+  const handleEnableAudio = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    try {
+      console.log('🔊 User clicked to enable audio');
+      video.muted = false;
+      video.volume = 1.0;
+      
+      // If video already ended, restart it
+      if (videoEnded) {
+        video.currentTime = 0;
+        await video.play();
+        setVideoEnded(false);
+        setShowText(false);
+      }
+      
+      setAudioEnabled(true);
+      console.log('✅ Audio enabled');
+    } catch (error) {
+      console.error('❌ Failed to enable audio:', error);
+    }
+  };
 
   // Don't wait for loading - show hero immediately with fallback content
   // if (loading) {
@@ -92,57 +168,19 @@ const Hero: React.FC = () => {
       itemType="https://schema.org/Organization"
       role="banner"
     >
-      {/* Static background - always present, lowest layer (z-0) */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-        {/* Placeholder fallback image with blur */}
-        <div className="absolute inset-0 opacity-30">
-          <Image
-            src="/logo.png"
-            alt="SuperShift Labs Logo"
-            fill
-            className="object-contain scale-50"
-            priority
-            quality={75}
-            sizes="50vw"
-            placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
-          />
-        </div>
-      </div>
+      {/* Darker overlay on mobile for better text readability */}
+      <div className={`absolute inset-0 ${isMobile ? 'bg-black/60' : 'bg-black/40'}`} role="presentation"></div>
       
-      {/* Video background - desktop OR mobile (if mobile video exists), above image (z-10) */}
-      {!videoPlayed && (
-        <div className="absolute inset-0 z-10">
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop={false}
-            playsInline
-            onEnded={handleVideoEnd}
-            onLoadedData={handleVideoLoaded}
-            onError={handleVideoError}
-            preload={isMobile ? "metadata" : "auto"}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-          >
-            {/* Use mobile-optimized video if available, otherwise fallback to desktop video */}
-            {isMobile ? (
-              <>
-                <source src="/hero-video-mobile.mp4" type="video/mp4" />
-                <source src="/hero-video.mp4" type="video/mp4" />
-              </>
-            ) : (
-              <source src="/hero-video.mp4" type="video/mp4" />
-            )}
-            {/* Fallback to gradient background with logo if video fails to load */}
-          </video>
-        </div>
-      )}
+      {/* Static background image only - video disabled for performance */}
+      <img 
+        src="https://d64gsuwffb70l.cloudfront.net/68d794bf6b2a864c0bdbf728_1758958817530_82b6efd2.webp"
+        alt="SuperShift Labs web development studio in Davenport Iowa - modern workspace with cutting-edge technology for mobile apps and cloud solutions"
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
+        loading="eager"
+        fetchPriority="high"
+      />
       
-      {/* Darker overlay on mobile for better text readability (z-20) */}
-      <div className={`absolute inset-0 z-20 ${isMobile ? 'bg-black/50' : 'bg-black/30'}`} role="presentation"></div>
-      
-      <article className={`relative z-30 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
+      <article className={`relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/LocalBusiness">
         <header className="mb-4 sm:mb-6">
           <h1 
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 sm:mb-4 leading-tight px-2" 
@@ -201,4 +239,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default React.memo(Hero);
+export default Hero;

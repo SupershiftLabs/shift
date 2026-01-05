@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const Navigation: React.FC = () => {
@@ -14,20 +14,20 @@ const Navigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = useCallback((id: string) => {
+  const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
     setIsMobileMenuOpen(false);
-  }, []);
+  };
 
-  const navItems = useMemo(() => [
+  const navItems = [
     { name: 'Services', id: 'services' },
     { name: 'Projects', id: 'projects' },
     { name: 'Pricing', id: 'pricing' },
     { name: 'FAQ', id: 'faq' },
     { name: 'About', id: 'about' },
     { name: 'Contact', id: 'contact' }
-  ], []);
+  ];
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 pointer-events-auto ${
@@ -47,7 +47,7 @@ const Navigation: React.FC = () => {
                 height={40}
                 className="object-contain"
                 priority
-                quality={75}
+                quality={90}
               />
             </div>
             <div className={`text-xl font-bold transition-colors ${
@@ -127,4 +127,4 @@ const Navigation: React.FC = () => {
   );
 };
 
-export default React.memo(Navigation);
+export default Navigation;

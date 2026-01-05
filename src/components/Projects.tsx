@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useSiteContent, useProjects } from '../hooks/useSiteContent';
 
@@ -9,20 +9,6 @@ const Projects: React.FC = () => {
   const { projects, loading: projectsLoading } = useProjects();
 
   const loading = contentLoading || projectsLoading;
-
-  // Memoize filtered projects to avoid recalculating on every render
-  const filteredProjects = useMemo(() => {
-    if (!projects || projects.length === 0) return [];
-    return filter === 'all' 
-      ? projects 
-      : projects.filter((p: any) => p.category === filter);
-  }, [projects, filter]);
-
-  // Memoize unique categories to avoid recalculating on every render
-  const categories = useMemo(() => {
-    if (!projects || projects.length === 0) return [];
-    return ['all', ...Array.from(new Set(projects.map((p: any) => p.category)))];
-  }, [projects]);
 
   if (loading) {
     return (
@@ -35,6 +21,8 @@ const Projects: React.FC = () => {
     );
   }
 
+  const filteredProjects = filter === 'all' ? projects : projects.filter((p: any) => p.category === filter);
+
   return (
     <section 
       id="projects" 
@@ -46,14 +34,14 @@ const Projects: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 id="projects-heading" className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {content.title || 'Our Current Projects - Iowa Web & Mobile App Portfolio'}
+            {content.title || 'Our Projects - Iowa Web & Mobile App Portfolio'}
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
             {content.description || 'Explore our portfolio of successful digital solutions and innovative applications built for Iowa businesses in Davenport, Quad Cities, and beyond'}
           </p>
           
           <div className="flex justify-center gap-4 mb-8" role="tablist" aria-label="Filter projects by category">
-            {categories.map((category) => (
+            {['all', 'web', 'mobile'].map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category)}
@@ -136,5 +124,4 @@ const Projects: React.FC = () => {
   );
 };
 
-// Wrap with React.memo to prevent unnecessary re-renders
-export default React.memo(Projects);
+export default Projects;

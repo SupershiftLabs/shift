@@ -12,12 +12,14 @@
     "analyze": "ANALYZE=true next build"
   },
   "browserslist": [
-    "Chrome >= 95",
-    "Firefox >= 95",
-    "Safari >= 15",
-    "Edge >= 95",
+    ">0.3%",
     "not dead",
-    "not IE 11"
+    "not op_mini all",
+    "last 2 versions",
+    "Chrome >= 90",
+    "Firefox >= 88",
+    "Safari >= 14",
+    "Edge >= 90"
   ],
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -61,11 +63,11 @@
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
     "marked": "^12.0.1",
-    "next": "^16.1.1",
-    "next-themes": "^0.4.6",
-    "react": "^19.2.3",
+    "next": "^14.2.0",
+    "next-themes": "^0.3.0",
+    "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
-    "react-dom": "^19.2.3",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "react-resizable-panels": "^2.1.3",
     "recharts": "^2.12.7",
@@ -85,7 +87,6 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.0",
     "postcss": "^8.4.47",
-    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3"
   }

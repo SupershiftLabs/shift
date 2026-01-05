@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Add empty turbopack config to silence Next.js 16 warning
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -13,20 +15,16 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'pjhrogdbzpqnxhfxxmsb.supabase.co',
-        pathname: '/storage/v1/object/public/**',
       },
       {
         protocol: 'https',
-        hostname: '**.supabase.co',
-        pathname: '/storage/v1/object/public/**',
+        hostname: '*.supabase.co',
       },
       {
         protocol: 'https',
         hostname: 'd64gsuwffb70l.cloudfront.net',
       },
     ],
-    // Add quality configuration
-    qualities: [75, 90],
     // Optimize images with longer cache
     minimumCacheTTL: 31536000, // 1 year
     formats: ['image/webp', 'image/avif'], // Use modern formats
@@ -37,18 +35,14 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   reactStrictMode: true,
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
-    // Remove React DevTools in production
-    reactRemoveProperties: process.env.NODE_ENV === 'production',
   },
-  // Modern JavaScript output - target ES2020 to eliminate polyfills
-  transpilePackages: [],
-  // Optimize CSS and packages
+  // Modern JavaScript output
+  output: 'standalone',
+  // Optimize CSS
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', '@supabase/supabase-js', 'react-hook-form', 'zod'],
-    turbo: {}, // Enable Turbopack for faster builds
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', '@supabase/supabase-js'],
   },
   // Enable compression
   compress: true,
@@ -67,20 +61,18 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     // Optimize CSS in production
     if (!dev && !isServer) {
-      // Aggressive tree shaking and dead code elimination
+      // Tree shaking and dead code elimination
       config.optimization = {
         ...config.optimization,
         usedExports: true,
         sideEffects: true,
         minimize: true,
         moduleIds: 'deterministic',
-        runtimeChunk: 'single', // Single runtime chunk
         splitChunks: {
           ...config.optimization.splitChunks,
           chunks: 'all',
-          maxInitialRequests: 30,
-          minSize: 15000,
-          maxSize: 250000, // Split large chunks
+          maxInitialRequests: 25,
+          minSize: 20000,
           cacheGroups: {
             ...config.optimization.splitChunks?.cacheGroups,
             // Bundle all CSS into one file
@@ -124,59 +116,16 @@ const nextConfig = {
         'react/jsx-runtime.js': 'react/jsx-runtime',
         'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
       }
-      
-      // Aggressive minification
-      config.optimization.minimize = true
-      config.optimization.concatenateModules = true
-      config.optimization.providedExports = true
-      config.optimization.usedExports = true
-      config.optimization.sideEffects = true
-      config.optimization.innerGraph = true
-      config.optimization.mangleExports = true
     }
     
-    // Remove unused code (tree shaking) - always enabled
+    // Remove unused code (tree shaking)
     config.optimization.usedExports = true
     
     return config
   },
-  // Add custom headers for caching and security
+  // Add custom headers for caching
   async headers() {
     return [
-      {
-        // Apply security headers to all routes
-        source: '/:path*',
-        headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on'
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload'
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
-          },
-        ],
-      },
       {
         source: '/_next/static/css/:path*',
         headers: [
@@ -207,3 +156,5 @@ const nextConfig = {
     ];
   },
 }
+
+export default nextConfig
