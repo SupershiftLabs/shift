@@ -127,6 +127,14 @@ const Footer: React.FC = () => {
                   View Pricing
                 </button>
               </li>
+              <li>
+                <a 
+                  href="/seo-checker"
+                  className="hover:text-white transition-colors"
+                >
+                  SEO Checker
+                </a>
+              </li>
             </ul>
           </div>
           
