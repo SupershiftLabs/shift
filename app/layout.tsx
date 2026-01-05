@@ -54,18 +54,22 @@ export const metadata: Metadata = {
     description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses.',
     images: [
       {
-        url: '/og-image.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
         alt: 'SuperShift Labs - Web Development Agency in Davenport, Iowa',
+        type: 'image/png',
       },
     ],
+    countryName: 'United States',
+    phoneNumbers: ['+1 (319) 537-0228'],
+    emails: ['admin@supershiftlabs.com'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'SuperShift Labs - Web & Mobile Apps Davenport Iowa',
     description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software and digital solutions for Iowa businesses.',
-    images: ['/og-image.png'],
+    images: ['/logo.png'],
     creator: '@supershiftlabs',
     site: '@supershiftlabs',
   },
@@ -371,6 +375,36 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="SuperShift Labs" />
+        
+        {/* OpenGraph Meta Tags - Explicit for better social media compatibility */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="SuperShift Labs" />
+        <meta property="og:title" content="SuperShift Labs - Web & Mobile Apps Davenport Iowa" />
+        <meta property="og:description" content="Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses." />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:image" content={`${siteUrl}/logo.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="SuperShift Labs - Web Development Agency in Davenport, Iowa" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:country-name" content="United States" />
+        <meta property="og:phone_number" content="+1 (319) 537-0228" />
+        <meta property="og:email" content="admin@supershiftlabs.com" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@supershiftlabs" />
+        <meta name="twitter:creator" content="@supershiftlabs" />
+        <meta name="twitter:title" content="SuperShift Labs - Web & Mobile Apps Davenport Iowa" />
+        <meta name="twitter:description" content="Leading web development and mobile app agency in Davenport, Iowa. Custom software and digital solutions for Iowa businesses." />
+        <meta name="twitter:image" content={`${siteUrl}/logo.png`} />
+        <meta name="twitter:image:alt" content="SuperShift Labs - Web Development Agency" />
+        
+        {/* Facebook/Meta Specific */}
+        <meta property="fb:app_id" content="your-fb-app-id" />
+        <meta property="og:see_also" content="https://www.facebook.com/supershiftlabs" />
+        <meta property="og:see_also" content="https://www.instagram.com/supershiftlabs" />
         
         {/* Favicon Links - Explicit for better mobile compatibility */}
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
