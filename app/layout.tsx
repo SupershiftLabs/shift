@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses.',
     images: [
       {
-        url: '/logo.png',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'SuperShift Labs - Web Development Agency in Davenport, Iowa',
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'SuperShift Labs - Web & Mobile Apps Davenport Iowa',
     description: 'Leading web development and mobile app agency in Davenport, Iowa. Custom software and digital solutions for Iowa businesses.',
-    images: ['/logo.png'],
+    images: ['/og-image.png'],
     creator: '@supershiftlabs',
     site: '@supershiftlabs',
   },
@@ -382,7 +382,7 @@ export default function RootLayout({
         <meta property="og:title" content="SuperShift Labs - Web & Mobile Apps Davenport Iowa" />
         <meta property="og:description" content="Leading web development and mobile app agency in Davenport, Iowa. Custom software, cloud solutions, and digital transformation for Iowa businesses." />
         <meta property="og:url" content={siteUrl} />
-        <meta property="og:image" content={`${siteUrl}/logo.png`} />
+        <meta property="og:image" content={`${siteUrl}/og-image.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="SuperShift Labs - Web Development Agency in Davenport, Iowa" />
@@ -398,7 +398,7 @@ export default function RootLayout({
         <meta name="twitter:creator" content="@supershiftlabs" />
         <meta name="twitter:title" content="SuperShift Labs - Web & Mobile Apps Davenport Iowa" />
         <meta name="twitter:description" content="Leading web development and mobile app agency in Davenport, Iowa. Custom software and digital solutions for Iowa businesses." />
-        <meta name="twitter:image" content={`${siteUrl}/logo.png`} />
+        <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
         <meta name="twitter:image:alt" content="SuperShift Labs - Web Development Agency" />
         
         {/* Facebook/Meta Specific */}
