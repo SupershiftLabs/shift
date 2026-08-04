@@ -337,7 +337,7 @@ export default function RootLayout({
           .dark { color-scheme: dark; }
           html { scroll-behavior: smooth; }
           img, video { max-width: 100%; height: auto; }
-          nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
+          nav.site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
           .container { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
           button { cursor: pointer; border: none; background: none; }
           a { text-decoration: none; color: inherit; }
