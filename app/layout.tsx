@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { ThemeProvider } from '../components/theme-provider'
 import { Toaster } from '../components/ui/sonner'
@@ -453,6 +454,7 @@ export default function RootLayout({
           {children}
           <Toaster />
           <CookieConsent />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
