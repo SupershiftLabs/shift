@@ -28,7 +28,7 @@ const FAQ: React.FC = () => {
     },
     {
       question: "Do you provide ongoing support and maintenance?",
-      answer: "Absolutely! We offer ongoing support, maintenance, and hosting packages starting at $65/month or $600/year. This includes updates, security patches, performance monitoring, and technical support for your website or app."
+      answer: "Absolutely! We offer ongoing support, maintenance, and hosting packages starting at $125/month or $1,200/year. This includes updates, security patches, performance monitoring, and technical support for your website or app."
     },
     {
       question: "Can you help with SEO and Google rankings?",
