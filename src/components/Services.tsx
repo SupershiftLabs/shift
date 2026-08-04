@@ -104,13 +104,12 @@ const Services: React.FC = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" role="list">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {displayServices.map((service: any, index: number) => (
               <article 
                 key={index}
                 onClick={() => setSelectedService(service)}
                 className="bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-700 cursor-pointer hover:border-green-500"
-                role="listitem"
                 itemScope
                 itemType="https://schema.org/Service"
                 aria-label={`Learn more about ${service.title} services`}

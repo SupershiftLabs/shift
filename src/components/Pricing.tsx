@@ -38,7 +38,7 @@ const Pricing: React.FC = () => {
         'Conversion optimization'
       ],
       highlight: true,
-      cta: 'Most Popular',
+      cta: 'Get Started',
       icon: '🚀',
       delivery: '6–9 days'
     },
@@ -162,7 +162,7 @@ const Pricing: React.FC = () => {
         </header>
 
         {/* Core Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16" role="list" aria-label="Website development packages">{pricingPlans.map((plan, index) => (
+        <div className="grid md:grid-cols-3 gap-8 mb-16" aria-label="Website development packages">{pricingPlans.map((plan, index) => (
             <article
               key={index}
               className={`relative rounded-2xl p-8 transition-all duration-300 hover:scale-105 ${
@@ -170,9 +170,8 @@ const Pricing: React.FC = () => {
                   ? 'bg-gradient-to-br from-green-500/20 to-blue-500/20 border-2 border-green-400 shadow-2xl shadow-green-500/20'
                   : 'bg-gray-800/70 border border-gray-700 hover:border-green-400/50'
               }`}
-              itemScope 
+              itemScope
               itemType="https://schema.org/Offer"
-              role="listitem"
             >
               {/* Popular Badge */}
               {plan.highlight && (
@@ -250,14 +249,13 @@ const Pricing: React.FC = () => {
           <h3 className="text-3xl font-bold text-white text-center mb-8">
             Advanced <span className="text-green-400">Solutions</span> for Iowa Businesses
           </h3>
-          <div className="grid md:grid-cols-3 gap-8" role="list" aria-label="Advanced development solutions">
+          <div className="grid md:grid-cols-3 gap-8" aria-label="Advanced development solutions">
             {advancedPlans.map((plan, index) => (
               <article
                 key={index}
                 className="relative rounded-2xl p-8 bg-gray-800/70 border border-gray-700 hover:border-green-400/50 transition-all duration-300 hover:scale-105"
-                itemScope 
+                itemScope
                 itemType="https://schema.org/Offer"
-                role="listitem"
               >
                 {/* Plan Icon */}
                 <div className="text-5xl mb-4" aria-hidden="true">{plan.icon}</div>
@@ -323,14 +321,13 @@ const Pricing: React.FC = () => {
           <h3 className="text-3xl font-bold text-white text-center mb-8">
             <span className="text-green-400">Add-ons</span> &amp; Services
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto" role="list" aria-label="Additional services">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto" aria-label="Additional services">
             {addOns.map((addon, index) => (
               <article
                 key={index}
                 className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 hover:border-green-400/50 transition-all duration-300"
-                itemScope 
+                itemScope
                 itemType="https://schema.org/Offer"
-                role="listitem"
               >
                 <h4 className="text-white font-semibold mb-2 text-sm" itemProp="name">{addon.name}</h4>
                 <p className="text-green-400 font-bold text-lg" itemProp="price">{addon.price}</p>

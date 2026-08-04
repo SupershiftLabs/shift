@@ -323,7 +323,7 @@ const Contact: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full px-6 py-4 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-700/25 text-center"
-              aria-label="Chat with SuperShift Labs on WhatsApp"
+              aria-label="Chat on WhatsApp with SuperShift Labs"
             >
               <div className="flex items-center justify-center gap-3">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

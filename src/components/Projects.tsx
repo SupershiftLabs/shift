@@ -60,14 +60,13 @@ const Projects: React.FC = () => {
           </div>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" role="list">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project: any) => (
             <article 
               key={project.id}
               className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-700"
-              itemScope 
+              itemScope
               itemType="https://schema.org/CreativeWork"
-              role="listitem"
             >
               <div className="relative overflow-hidden h-48">
                 <Image 

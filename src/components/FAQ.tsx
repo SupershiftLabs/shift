@@ -82,7 +82,7 @@ const FAQ: React.FC = () => {
           </p>
         </header>
 
-        <div className="space-y-4" role="list">
+        <div className="space-y-4">
           {faqs.map((faq, index) => (
             <article
               key={index}
@@ -90,7 +90,6 @@ const FAQ: React.FC = () => {
               itemScope
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
-              role="listitem"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -153,7 +152,7 @@ const FAQ: React.FC = () => {
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }}
             className="inline-flex items-center gap-2 px-6 py-3 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-lg transition-colors"
-            aria-label="Contact SuperShift Labs for more information"
+            aria-label="Get In Touch with SuperShift Labs for more information"
           >
             Get In Touch
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

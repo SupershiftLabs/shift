@@ -217,7 +217,7 @@ const Hero: React.FC = () => {
               scrollToSection('services');
             }}
             className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-green-500 hover:bg-green-600 active:bg-green-700 text-black font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg shadow-green-500/25 touch-manipulation text-center"
-            aria-label="View our web development, mobile app, and cloud services in Davenport, Iowa"
+            aria-label="Explore Our Services: web development, mobile app, and cloud services in Davenport, Iowa"
             itemProp="url"
           >
             Explore Our Services →
