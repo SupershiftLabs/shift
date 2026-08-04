@@ -295,8 +295,9 @@ export default function CookieConsent() {
         </div>
       </div>
 
-      {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/20 dark:bg-black/40 z-40 backdrop-blur-sm animate-in fade-in duration-300" />
+      {/* Backdrop - decorative only; pointer-events-none so it doesn't
+          block interaction with the rest of the page while shown */}
+      <div className="fixed inset-0 bg-black/20 dark:bg-black/40 z-40 backdrop-blur-sm animate-in fade-in duration-300 pointer-events-none" />
     </>
   )
 }
