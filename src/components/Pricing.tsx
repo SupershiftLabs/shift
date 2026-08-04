@@ -5,7 +5,7 @@ const Pricing: React.FC = () => {
   const pricingPlans = [
     {
       name: '5-Page Services Site',
-      price: '$1,800 – $2,500',
+      price: '$2,800 – $3,900',
       period: '4–7 days',
       description: 'Home • About • Services • Portfolio • Contact\nMobile-perfect and SEO-ready',
       features: [
@@ -24,7 +24,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Services Site + Lead Machine',
-      price: '$2,800 – $3,800',
+      price: '$4,200 – $5,800',
       period: '6–9 days',
       description: 'Everything in Services Site plus powerful lead generation tools',
       features: [
@@ -44,7 +44,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Full Headless CMS Site',
-      price: '$4,200 – $6,000',
+      price: '$6,200 – $8,900',
       period: '9–14 days',
       description: 'Client edits text, images, blog, services themselves (no WordPress bloat)',
       features: [
@@ -67,7 +67,7 @@ const Pricing: React.FC = () => {
   const advancedPlans = [
     {
       name: 'Complete E-commerce Store',
-      price: '$5,500 – $9,000',
+      price: '$6,900 – $11,000',
       period: '2–4 weeks',
       description: 'Full-featured online store with everything you need to sell',
       features: [
@@ -85,7 +85,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Custom Web App / SaaS',
-      price: '$10,000 – $25,000+',
+      price: '$12,000 – $28,000+',
       period: '4–10 weeks',
       description: 'Advanced web applications with custom functionality',
       features: [
@@ -123,7 +123,7 @@ const Pricing: React.FC = () => {
 
   const addOns = [
     { name: 'Domain + DNS setup', price: '$150' },
-    { name: 'First-year hosting & updates', price: '$600/yr or $65/mo' },
+    { name: 'First-year hosting & updates', price: '$1,200/yr or $125/mo' },
     { name: 'Full SEO + Google Business optimization', price: '$750' },
     { name: 'Rush delivery (under 5 days)', price: '+30%' }
   ];
