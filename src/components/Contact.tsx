@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 // Social media icons component
@@ -80,37 +79,16 @@ const Contact: React.FC = () => {
     setError(null);
     
     try {
-      // Try Supabase first if configured, otherwise log locally
-      if (isSupabaseConfigured) {
-        // Save to Supabase
-        const { error: supabaseError } = await supabase
-          .from('contacts')
-          .insert([
-            {
-              name: formData.name,
-              email: formData.email,
-              message: `Company: ${formData.company}\n\n${formData.message}`
-            }
-          ]);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-        if (supabaseError) {
-          throw supabaseError;
-        }
-        console.log('Form submitted to database successfully');
-      } else {
-        // Frontend-only mode - just log the submission
-        const formSubmission = {
-          name: formData.name,
-          email: formData.email,
-          company: formData.company,
-          message: formData.message,
-          timestamp: new Date().toISOString()
-        };
+      const result = await response.json();
 
-        console.log('Contact form submitted (frontend-only mode):', formSubmission);
-        
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit form');
       }
 
       setSubmitted(true);
